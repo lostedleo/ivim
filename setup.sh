@@ -17,7 +17,7 @@ fi
 sudo easy_install -ZU autopep8 twisted
 sudo ln -s /usr/bin/ctags /usr/local/bin/ctags
 mv -f ~/vim ~/vim_old
-cd ~/ && git git://github.com/humiaozuzu/dot-vimrc.git ~/.vim 
+cd ~/ && git git@github.com:lostedleo/ivim.git ~/.vim
 mv -f ~/.vim ~/.vim_old
 mv -f ~/.vimrc ~/.vimrc_old
 mv -f ~/.vim/.vimrc ~/
