@@ -18,15 +18,18 @@ syntax on
 "--------
 " Vim UI
 "--------
-"color desert     " 设置背景主题  
-"color ron     " 设置背景主题  
-color torte     " 设置背景主题  
+color desert     " 设置背景主题
+"color solarized
+"color torte     " 设置背景主题
+"color molokai     " 设置背景主题
+"color xemacs " 设置背景主题
+
 set background=dark
 set cul             "高亮光标所在行
 set cuc
-set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
-set go=             " 不要图形按钮  
-set nocompatible    "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  
+set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示
+set go=             " 不要图形按钮
+set nocompatible    "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限
 
 " highlight current line
 au WinLeave * set nocursorline nocursorcolumn
@@ -48,7 +51,7 @@ set nofoldenable                                                  " disable fold
 set confirm                                                       " prompt when existing from an unsaved file
 set backspace=indent,eol,start                                    " More powerful backspacing
 set t_Co=256                                                      " Explicitly tell vim that the terminal has 256 colors "
-set mouse=a                                                       " use mouse in all modes
+set mouse=v                                                       " use mouse in all modes
 set report=0                                                      " always report number of lines changed                "
 set nowrap                                                        " dont wrap lines
 set scrolloff=5                                                   " 5 lines above/below cursor when scrolling
@@ -298,6 +301,9 @@ nnoremap <C-F4> :vert diffsplit
 nmap  <D-/> :
 nnoremap <leader>a :Ack
 nnoremap <leader>v V`]
+nnoremap <Leader>r :source ~/.vimrc<cr>
+nnoremap te :NERDTreeToggle<cr>
+
 map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
 map <C-A> ggVG$"+y
@@ -307,7 +313,10 @@ imap <C-v> <Esc>"*pa
 imap <C-a> <Esc>^
 imap <C-e> <Esc>$
 vmap <C-c> "+y
-set mouse=v
+
+"for quickfix next error
+
+nnoremap <C-n> :cn<cr>
 
 "C，C++ 按F5编译运行
 nmap <C-F5> :call CompileRunGcc()<CR>
@@ -393,8 +402,8 @@ nnoremap <c-l> <c-w>l
 set autoread
 " quickfix模式
 autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
-"代码补全 
-set completeopt=preview,menu 
+"代码补全
+set completeopt=preview,menu
 "自动保存
 set autowrite
 set magic                   " 设置魔术
@@ -412,7 +421,6 @@ set noswapfile
 " 允许backspace和光标键跨越行边界
 set whichwrap+=<,>,h,l
 " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
-set mouse=a
 set selection=exclusive
 set selectmode=mouse,key
 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
