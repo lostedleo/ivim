@@ -19,6 +19,8 @@ mv -f ~/.vimrc ~/.vimrc_old
 #ivim config
 cd ~/ && git clone https://github.com/lostedleo/ivim.git ~/.vim
 ln -sf ~/.vim/vimrc ~/.vimrc
+ln -sf ~/.vim/screenrc ~/.screenrc
+ln -sf ~/.vim/tmux.conf ~/.tmux.conf
 git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
 tmp_file=ivim_temp
