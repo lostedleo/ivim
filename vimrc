@@ -154,12 +154,13 @@ let g:Tb_MaxSize = 2
 let g:Tb_TabWrap = 1
 
 hi Tb_Normal guifg=white ctermfg=white
-hi Tb_Changed guifg=green ctermfg=green
-hi Tb_VisibleNormal ctermbg=252 ctermfg=235
-hi Tb_VisibleChanged guifg=green ctermbg=252 ctermfg=white
+hi Tb_Changed guifg=white ctermfg=white
+hi Tb_VisibleNormal ctermbg=blue ctermfg=white
+hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
 
 nmap <silent> <leader>j :Tbbn<cr>
 nmap <silent> <leader>k :Tbbp<cr>
+nmap <silent> <leader>d :Tbbd<cr>
 
 "----------------------------------------------------------
 " easy-motion
@@ -429,8 +430,6 @@ set report=0
 set fillchars=vert:\ ,stl:\ ,stlnc:\
 " 高亮显示匹配的括号
 set showmatch
-" 匹配括号高亮的时间（单位是十分之一秒）
-set matchtime=1
 
 " When editing a file, always jump to the last cursor position
 autocmd BufReadPost *
