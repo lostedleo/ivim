@@ -154,7 +154,7 @@ let g:Tb_MaxSize = 2
 let g:Tb_TabWrap = 1
 
 hi Tb_Normal guifg=white ctermfg=white
-hi Tb_Changed guifg=white ctermfg=white
+hi Tb_Changed guifg=blue ctermfg=blue
 hi Tb_VisibleNormal ctermbg=blue ctermfg=white
 hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
 
