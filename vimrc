@@ -148,13 +148,43 @@ map :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q
 set tags=~/Study/http_load-14aug2014/tags,~/Study/stl/tags
 
 "----------------------------------------------------------
+" Cscope配置
+"----------------------------------------------------------
+if has("cscope")
+    set csprg=/usr/local/bin/cscope
+    set csto=0
+    set cst
+    set nocsverb
+    " add any database in current directory
+    if filereadable("cscope.out")
+        cs add cscope.out
+        " else add database pointed to by environment
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+    set csverb
+endif
+
+nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<CR><CR>
+nmap g<C-/> :cs find 0 <C-R>=expand(“<cword>”)<CR><CR>
+
+nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>f :cs find f <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>i :cs find i ^<C-R>=expand("<cword>")<CR>$<CR>
+nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+"----------------------------------------------------------
 " tabbar
 "----------------------------------------------------------
 let g:Tb_MaxSize = 2
 let g:Tb_TabWrap = 1
 
 hi Tb_Normal guifg=white ctermfg=white
-hi Tb_Changed guifg=blue ctermfg=blue
+hi Tb_Changed guifg=blue ctermfg=white
 hi Tb_VisibleNormal ctermbg=blue ctermfg=white
 hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
 
@@ -281,7 +311,7 @@ nmap tp :CtrlP<cr>
 " Fn config
 "----------------------------------------------------------
 " Keybindings for plugin toggle
-:nmap <silent> <F9> <ESC>:Tlist<RETURN>
+nmap <silent> <F9> <ESC>:Tlist<RETURN>
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 nmap tg :TagbarToggle<cr>
@@ -294,7 +324,7 @@ nmap <F4> :IndentGuidesToggle<cr>
 "去空行
 nnoremap <C-F2> :g/^\s*$/d<CR>
 "打开树状文件目录
-nmap th \be
+"nmap th \be
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
 "比较文件
 nnoremap <C-F4> :vert diffsplit
@@ -309,7 +339,7 @@ map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
 map <C-A> ggVG$"+y
 " 选中状态下 Ctrl+c 复制
-"map <C-v> "*pa
+map <C-v> "*pa
 imap <C-v> <Esc>"*pa
 imap <C-a> <Esc>^
 imap <C-e> <Esc>$
