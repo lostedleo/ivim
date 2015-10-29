@@ -204,6 +204,7 @@ let g:EasyMotion_leader_key = '<Leader>'
 "----------------------------------------------------------
 let g:vimgdb_debug_file = ""
 run bundle/vimgdb-for-vim7.3/vimgdb_runtime/macros/gdb_mappings.vim
+nmap <silent> tb :bel 20vsplit gdb-variables<cr>
 
 "----------------------------------------------------------
 " Tagbar
