@@ -192,8 +192,6 @@ nmap <silent> <leader>j :Tbbn<cr>
 nmap <silent> <leader>k :Tbbp<cr>
 nmap <silent> <leader>d :Tbbd<cr>
 
-run ~/.vim/bundle/vimgdb_runtime/macros/gdb_mappings.vim
-
 "----------------------------------------------------------
 " easy-motion
 "----------------------------------------------------------
