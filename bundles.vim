@@ -41,7 +41,7 @@ Bundle 'nathanaelkane/vim-indent-guides'
 " IDE features
 "--------------
 Bundle 'scrooloose/nerdtree'
-Bundle 'humiaozuzu/TabBar'
+"Bundle 'humiaozuzu/TabBar'
 Bundle 'majutsushi/tagbar'
 Bundle 'mileszs/ack.vim'
 Bundle 'kien/ctrlp.vim'
@@ -52,6 +52,7 @@ Bundle 'bronson/vim-trailing-whitespace'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'lostedleo/bufexplorer'
 Bundle 'lostedleo/avim'
+Bundle 'lostedleo/vimgdb-for-vim7.3'
 
 "-------------
 " Other Utils

@@ -192,10 +192,18 @@ nmap <silent> <leader>j :Tbbn<cr>
 nmap <silent> <leader>k :Tbbp<cr>
 nmap <silent> <leader>d :Tbbd<cr>
 
+run ~/.vim/bundle/vimgdb_runtime/macros/gdb_mappings.vim
+
 "----------------------------------------------------------
 " easy-motion
 "----------------------------------------------------------
 let g:EasyMotion_leader_key = '<Leader>'
+
+"----------------------------------------------------------
+" vimgdb-motion
+"----------------------------------------------------------
+let g:vimgdb_debug_file = ""
+run bundle/vimgdb-for-vim7.3/vimgdb_runtime/macros/gdb_mappings.vim
 
 "----------------------------------------------------------
 " Tagbar
@@ -315,6 +323,7 @@ nmap <silent> <F9> <ESC>:Tlist<RETURN>
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 nmap tg :TagbarToggle<cr>
+nmap th :BufExplorer<CR>
 nmap <F3> :NERDTreeToggle<cr>
 imap <F3> <ESC> :NERDTreeToggle<CR>
 nmap <F6> :GundoToggle<cr>
