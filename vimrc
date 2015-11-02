@@ -188,9 +188,9 @@ hi Tb_Changed guifg=blue ctermfg=white
 hi Tb_VisibleNormal ctermbg=blue ctermfg=white
 hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
 
-nmap <silent> <leader>j :Tbbn<cr>
-nmap <silent> <leader>k :Tbbp<cr>
-nmap <silent> <leader>d :Tbbd<cr>
+"nmap <silent> <leader>j :Tbbn<cr>
+"nmap <silent> <leader>k :Tbbp<cr>
+"nmap <silent> <leader>d :Tbbd<cr>
 
 "----------------------------------------------------------
 " easy-motion
