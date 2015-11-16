@@ -207,8 +207,8 @@ nmap <silent> tb :bel 20vsplit gdb-variables<cr>
 "----------------------------------------------------------
 " Tagbar
 "----------------------------------------------------------
-"let g:tagbar_left=1
-let g:tagbar_right=1
+let g:tagbar_left=1
+"let g:tagbar_right=1
 let g:tagbar_width=30
 let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
@@ -247,8 +247,8 @@ let NERDTreeChDirMode=2
 let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
 " let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
 let NERDTreeShowBookmarks=1
-"let NERDTreeWinPos = "right"
-let NERDTreeWinPos = "left"
+let NERDTreeWinPos = "right"
+"let NERDTreeWinPos = "left"
 
 " nerdcommenter
 let NERDSpaceDelims=1
@@ -258,6 +258,34 @@ let NERDCompactSexyComs=1
 autocmd vimenter * if !argc() | NERDTree | endif
 " 只剩 NERDTree时自动关闭
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+"----------------------------------------------------------
+" SrcExpl
+"----------------------------------------------------------
+" // The switch of the Source Explorer
+nmap ts :SrcExplToggle<CR>
+" // Set the height of Source Explorer window
+let g:SrcExpl_winHeight = 8
+" // Set 100 ms for refreshing the Source Explorer
+let g:SrcExpl_refreshTime = 100
+" // Set "Enter" key to jump into the exact definition context
+let g:SrcExpl_jumpKey = "<ENTER>"
+" // Set "Space" key for back from the definition context
+let g:SrcExpl_gobackKey = "<SPACE>"
+" // In order to avoid conflicts, the Source Explorer should know what plugins
+" // except itself are using buffers. And you need add their buffer names into
+" // below listaccording to the command ":buffers!"
+let g:SrcExpl_pluginList = [
+        \ "__Tag_bar__",
+        \ "_NERD_tree_"
+    \ ]
+
+" // Enable/Disable the local definition searching, and note that this is not
+" // guaranteed to work, the Source Explorer doesn't check the syntax for now.
+" // It only searches for a match with the keyword according to command 'gd'
+let g:SrcExpl_searchLocalDef = 1
+" // Do not let the Source Explorer update the tags file when opening
+let g:SrcExpl_isUpdateTags = 0
 
 "----------------------------------------------------------
 " ZenCoding
