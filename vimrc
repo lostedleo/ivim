@@ -134,7 +134,7 @@ let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
 let Tlist_Auto_Open=0
 let Tlist_Show_One_File = 1 "不同时显示多个文件的tag，只显示当前文件的
 let Tlist_Sort_Type = "name"    " 按照名称排序
-let Tlist_Use_Right_Window = 1  " 在右侧显示窗口
+let Tlist_Use_Right_Window = 0  " 在右侧显示窗口
 let Tlist_Compart_Format = 1    " 压缩方式
 let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer
 let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags
@@ -210,7 +210,7 @@ nmap <silent> tb :bel 20vsplit gdb-variables<cr>
 let g:tagbar_left=1
 "let g:tagbar_right=1
 let g:tagbar_width=30
-let g:tagbar_autofocus = 1
+"let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
 let g:tagbar_compact = 1
 " tag for coffee
@@ -263,7 +263,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " SrcExpl
 "----------------------------------------------------------
 " // The switch of the Source Explorer
-nmap ts :SrcExplToggle<CR>
+nmap <silent> ts :SrcExplToggle<CR>
 " // Set the height of Source Explorer window
 let g:SrcExpl_winHeight = 8
 " // Set 100 ms for refreshing the Source Explorer
@@ -275,10 +275,10 @@ let g:SrcExpl_gobackKey = "<SPACE>"
 " // In order to avoid conflicts, the Source Explorer should know what plugins
 " // except itself are using buffers. And you need add their buffer names into
 " // below listaccording to the command ":buffers!"
-let g:SrcExpl_pluginList = [
-        \ "__Tag_bar__",
-        \ "_NERD_tree_"
-    \ ]
+"let g:SrcExpl_pluginList = [
+"        \ "__Tag_bar__",
+"        \ "_NERD_tree_"
+"    \ ]
 
 " // Enable/Disable the local definition searching, and note that this is not
 " // guaranteed to work, the Source Explorer doesn't check the syntax for now.
