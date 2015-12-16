@@ -2,10 +2,10 @@
 
 usage()
 {
-    echo "usage : makecscope src_path project_name [project current path/common path]"
+    echo "usage : makecscope src_path [project_name] [project current path/common path]"
     echo "I will create cscope db in project current path or ~/cscope/project_name"
 }
-if [ $# -ne 2 ]
+if [ $# -ne 1 ]
 then 
     usage
     exit
