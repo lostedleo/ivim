@@ -2,23 +2,23 @@
 echo "安装将花费一定时间，请耐心等待直到安装完成^_^"
 
 if which apt-get >/dev/null; then
-	sudo apt-get install -y ctags ack cscope
+  sudo apt-get install -y ctags ack cscope
 elif which yum >/dev/null; then
-	sudo yum install -y ctags ack cscope
+  sudo yum install -y ctags ack cscope
 elif which brew >/dev/null;then
-    echo "You are using HomeBrew tool"
-    brew install ctags ack cscope
+  echo "You are using HomeBrew tool"
+  brew install ctags ack cscope
 fi
 
 sudo ln -s /usr/bin/ctags /usr/local/bin/ctags
 
 #backup old_vim
 if [ -d ~/.vim ]; then
-    mv -f ~/.vim ~/vim_old
+  mv -f ~/.vim ~/vim_old
 fi
 
 if [ -f ~/.vimrc ];then
-    mv -f ~/.vimrc ~/.vimrc_old
+  mv -f ~/.vimrc ~/.vimrc_old
 fi
 
 #ivim config
