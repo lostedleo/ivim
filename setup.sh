@@ -15,7 +15,7 @@ function set_shell()
 
     check_alias $shell_name >/dev/null 2>&1
     if [ $? -ne 0 ];then
-      echo $command > /dev/null | tee -a $shell_name
+      echo $command| tee -a $shell_name
     fi
   else
     check_alias $shell_name >/dev/null 2>&1
