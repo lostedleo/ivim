@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "安装将花费一定时间，请耐心等待直到安装完成^_^"
+echo "ivim install vim plugins will task a new minutes, please waiting! ^_^"
 
 function set_shell()
 {
@@ -48,7 +48,9 @@ elif which brew >/dev/null;then
   brew install ctags ack cscope
 fi
 
-sudo ln -s /usr/bin/ctags /usr/local/bin/ctags
+if [ ! -f /usr/local/bin/ctags ];then
+  sudo ln -s /usr/bin/ctags /usr/local/bin/ctags
+fi
 
 #exist ivim do't backup and git clone
 if [ ! -f ~/.vim/setup.sh ];then
@@ -79,10 +81,10 @@ if [ ! -d ~/.vim/bundle ];then
 
   #install vim plugin
   tmp_file=ivim_temp
-  echo "ivim正在努力为您安装bundle程序" > $tmp_file
-  echo "安装完毕将自动退出" >> $tmp_file
-  echo "请耐心等待" >> $tmp_file
+  echo "ivim installing bundle plugins" > $tmp_file
+  echo "install completed will auto exit" >> $tmp_file
+  echo "please wating..." >> $tmp_file
   vim $tmp_file -c "BundleInstall" -c "q" -c "q"
   rm $tmp_file
-  echo "安装完成"
+  echo "install completed!"
 fi
