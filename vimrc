@@ -46,7 +46,7 @@ set smartcase
 nmap tt :%s/\t/  /g<CR>
 
 " editor settings
-set history=1000
+set history=10000
 set nocompatible
 set nofoldenable                                                  " disable folding"
 set confirm                                                       " prompt when existing from an unsaved file
