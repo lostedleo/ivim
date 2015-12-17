@@ -64,6 +64,7 @@ set_shell
 ln -sf ~/.vim/vimrc ~/.vimrc
 ln -sf ~/.vim/screenrc ~/.screenrc
 ln -sf ~/.vim/tmux.conf ~/.tmux.conf
+ln -sf ~/.vim/config ~/.ssh/config
 
 #
 if [ ! -d ~/.vim/bundle ];then
