@@ -8,7 +8,17 @@ fi
 alias grep='grep --color=auto --exclude-dir=.bzr --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn -i'
 alias psgrep='ps -ef|grep'
 
+#tmux alias
+alias tmuxat='tmux at -t'
+alias tmuxnw='tmux new -s'
+alias tmuxkl='tmux kill-session -t'
+
+#screenrc alias
+alias screenat='screenrc -rd'
+alias screennw='screen -S'
+
 #git alias
+alias gitad='git add'
 alias gitco='git commit -m'
 alias gitpl='git pull'
 alias gitdf='git diff'
