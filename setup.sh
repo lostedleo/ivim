@@ -3,34 +3,24 @@ echo "ivim install vim plugins will task a new minutes, please waiting! ^_^"
 
 function set_shell()
 {
-  command="source ~/.vim/alias"
-
   function check_alias()
   {
-    cmd="grep ~/.vim/alias $1"
-    cmd=`$cmd`
-      if [ "${cmd}xyz" != "xyz" ];then
-        return 0
-      else
-        return -1
-      fi
+    grep "~/.vim/alias" $1
   }
 
+  command="source ~/.vim/alias"
   shell_name=~/.bashrc
   if [ -f ~/.zshrc ]; then
     shell_name=~/.zshrc
-    check_alias $shell_name
-    ret=$?
 
-    if [ $ret -ne 0 ];then
+    check_alias $shell_name >/dev/null 2>&1
+    if [ $? -ne 0 ];then
       echo $command > /dev/null | tee -a $shell_name
     fi
   else
-    check_alias $shell_name
-    ret=$?
-
-    if [ $ret -ne 0 ];then
-      sed -i 'N;2${command}' $shell_name
+    check_alias $shell_name >/dev/null 2>&1
+    if [ $? -ne 0 ];then
+      sed -i "N;2a${command}" $shell_name
     fi
   fi
 }
@@ -39,11 +29,11 @@ function set_shell()
 #start config vim and alias
 #
 
-if which apt-get >/dev/null; then
+if which apt-get >/dev/null 2>&1; then
   sudo apt-get install -y ctags ack cscope
-elif which yum >/dev/null; then
+elif which yum >/dev/null 2>&1; then
   sudo yum install -y ctags ack cscope
-elif which brew >/dev/null;then
+elif which brew >/dev/null 2>&1;then
   echo "You are using HomeBrew tool"
   brew install ctags ack cscope
 fi
