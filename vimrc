@@ -42,7 +42,7 @@ set incsearch
 set ignorecase
 set smartcase
 "将tab替换为空格
-nmap tt :%s/\t/    /g<CR>
+nmap tt :%s/\t/  /g<CR>
 
 " editor settings
 set history=1000
@@ -86,7 +86,7 @@ au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal dict+=~/.vim/dict/css.dict
 
-autocmd FileType php setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
+autocmd FileType c,cpp,php setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 autocmd FileType ruby setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
 autocmd FileType php setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=120
 autocmd FileType coffee,javascript setlocal tabstop=2 shiftwidth=2 softtabstop=2 textwidth=120
