@@ -146,7 +146,13 @@ set autochdir
 nmap tl :Tlist<cr>
 map :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q
 "设置tags
-set tags=~/Study/http_load-14aug2014/tags,~/Study/stl/tags
+set tags=
+
+if has("cstag")
+  if filereadable("*tags")
+    set tags=tags,*tags
+  endif
+endif
 
 "----------------------------------------------------------
 " Cscope配置
