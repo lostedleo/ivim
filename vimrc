@@ -255,14 +255,18 @@ let NERDTreeWinPos = "right"
 let NERDSpaceDelims=1
 " nmap <D-/> :NERDComToggleComment<cr>
 let NERDCompactSexyComs=1
-"当打开vim且没有文件时自动打开NERDTree
-autocmd vimenter * if !argc() | call CallPlugin() | endif
+"当打开vim且没有文件时自动打开NERDTree & Tagbar,否则只打开Tagbar
+autocmd vimenter * call CallPlugin()
 " 只剩 NERDTree时自动关闭
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 func! CallPlugin()
-  exec "NERDTree"
-  exec "Tagbar"
+  if !argc()
+    exec "NERDTree"
+    exec "Tagbar"
+  else
+    exec "Tagbar"
+  endif
 endfunc
 "----------------------------------------------------------
 " SrcExpl
