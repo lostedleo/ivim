@@ -1,0 +1,17 @@
+#This is common alias
+if [ ! which tree ] > /dev/null;then
+  alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+fi
+
+alias grep='grep --color=auto --exclude-dir=.bzr --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn -i'
+alias psgrep='ps -ef|grep'
+
+#git alias
+alias gitco='git commit -m'
+alias gitpl='git pull'
+alias gitdf='git diff'
+alias gitps='git push
+
+#svn alias
+svnu='svn up'
+svnco='svn commit -m'

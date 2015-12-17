@@ -24,6 +24,7 @@ color torte     " 设置背景主题
 "color molokai     " 设置背景主题
 "color xemacs " 设置背景主题
 
+set term=screen
 set background=dark
 set cul             "高亮光标所在行
 set cuc
@@ -255,10 +256,14 @@ let NERDSpaceDelims=1
 " nmap <D-/> :NERDComToggleComment<cr>
 let NERDCompactSexyComs=1
 "当打开vim且没有文件时自动打开NERDTree
-autocmd vimenter * if !argc() | NERDTree | endif
+autocmd vimenter * if !argc() | call CallPlugin() | endif
 " 只剩 NERDTree时自动关闭
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+func! CallPlugin()
+  exec "NERDTree"
+  exec "Tagbar"
+endfunc
 "----------------------------------------------------------
 " SrcExpl
 "----------------------------------------------------------
