@@ -1,5 +1,7 @@
 #This is common alias
-if [ ! which tree ] > /dev/null;then
+#/bin/sh
+if  which tree  > /dev/null;then
+else
   alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 fi
 
@@ -10,7 +12,7 @@ alias psgrep='ps -ef|grep'
 alias gitco='git commit -m'
 alias gitpl='git pull'
 alias gitdf='git diff'
-alias gitps='git push
+alias gitps='git push'
 
 #svn alias
 svnu='svn up'

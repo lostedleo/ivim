@@ -380,8 +380,8 @@ map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
 map <C-A> ggVG$"+y
 " 选中状态下 Ctrl+c 复制
-map <C-v> "*pa
-imap <C-v> <Esc>"*pa
+"map <C-v> "*pa
+"imap <C-v> <Esc>"*pa
 imap <C-a> <Esc>^
 imap <C-e> <Esc>$
 vmap <C-c> "+y
