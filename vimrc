@@ -24,7 +24,6 @@ color torte     " 设置背景主题
 "color molokai     " 设置背景主题
 "color xemacs " 设置背景主题
 
-set term=screen
 set background=dark
 set cul             "高亮光标所在行
 set cuc
