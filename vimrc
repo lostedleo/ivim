@@ -268,9 +268,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 func! CallPlugin()
   if !argc()
     exec "NERDTree"
-    exec "Tagbar"
+    exec "Tlist"
   else
-    exec "Tagbar"
+    exec "Tlist"
   endif
 endfunc
 "----------------------------------------------------------
