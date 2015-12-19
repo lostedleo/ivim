@@ -300,6 +300,9 @@ let g:SrcExpl_gobackKey = "<SPACE>"
 let g:SrcExpl_searchLocalDef = 1
 " // Do not let the Source Explorer update the tags file when opening
 let g:SrcExpl_isUpdateTags = 0
+" // Use 'Exuberant Ctags' with '--sort=foldcase -R .' or '-L cscope.files' to
+" " // create/update the tags file
+let g:SrcExpl_updateTagsCmd = "ctags --sort=foldcase -R ."
 
 "----------------------------------------------------------
 " ZenCoding
