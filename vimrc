@@ -262,7 +262,7 @@ let NERDCompactSexyComs=1
 "当打开vim且没有文件时自动打开NERDTree & Tagbar,否则只打开Tagbar
 autocmd vimenter * call CallPlugin()
 " 只剩 NERDTree时自动关闭
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 func! CallPlugin()
   if !argc()
