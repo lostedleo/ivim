@@ -40,8 +40,9 @@ Bundle 'nathanaelkane/vim-indent-guides'
 "--------------
 " IDE features
 "--------------
+"Bundle 'fholgado/minibufexpl.vim'
 Bundle 'scrooloose/nerdtree'
-"Bundle 'humiaozuzu/TabBar'
+Bundle 'humiaozuzu/TabBar'
 Bundle 'majutsushi/tagbar'
 Bundle 'wesleyche/SrcExpl'
 Bundle 'mileszs/ack.vim'

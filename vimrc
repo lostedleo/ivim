@@ -143,7 +143,7 @@ let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags
 "
 set autochdir
 nmap tl :Tlist<cr>
-map :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q
+map tu :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q
 "设置tags
 set tags=
 
@@ -268,9 +268,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 func! CallPlugin()
   if !argc()
     exec "NERDTree"
-    exec "Tlist"
-  else
-    exec "Tlist"
+    exec "Tagbar"
   endif
 endfunc
 "----------------------------------------------------------
