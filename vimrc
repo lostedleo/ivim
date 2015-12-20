@@ -19,9 +19,8 @@ syntax on
 " Vim UI
 "--------
 " color desert     " 设置背景主题
-" color solarized
 color torte     " 设置背景主题
-"color molokai     " 设置背景主题
+" color molokai     " 设置背景主题
 "color xemacs " 设置背景主题
 
 " set background=dark

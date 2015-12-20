@@ -101,7 +101,7 @@ Bundle 'pangloss/vim-javascript'
 " Color Schemes
 "--------------
 Bundle 'rickharris/vim-blackboard'
-Bundle 'altercation/vim-colors-solarized'
+" Bundle 'altercation/vim-colors-solarized'
 Bundle 'rickharris/vim-monokai'
 Bundle 'tpope/vim-vividchalk'
 Bundle 'Lokaltog/vim-distinguished'
