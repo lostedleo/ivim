@@ -18,13 +18,13 @@ syntax on
 "--------
 " Vim UI
 "--------
-"color desert     " 设置背景主题
-"color solarized
+" color desert     " 设置背景主题
+" color solarized
 color torte     " 设置背景主题
 "color molokai     " 设置背景主题
 "color xemacs " 设置背景主题
 
-set background=dark
+" set background=dark
 set cul             "高亮光标所在行
 set cuc
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示
