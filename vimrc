@@ -60,7 +60,7 @@ set showcmd                                                       " show typed c
 set title                                                         " show file in titlebar
 set laststatus=2                                                  " use 2 lines for the status bar
 set matchtime=2                                                   " show matching bracket for 0.2 seconds
-set matchpairs+=<:>                                               " specially for html
+"set matchpairs+=<:>                                               " specially for html
 " set relativenumber
 
 " Default Indentation
@@ -142,7 +142,7 @@ let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags
 "
 set autochdir
 nmap tl :Tlist<cr>
-map tu :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q
+map tu :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<CR>
 "设置tags
 set tags=
 
@@ -193,9 +193,9 @@ hi Tb_Changed guifg=blue ctermfg=white
 hi Tb_VisibleNormal ctermbg=blue ctermfg=white
 hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
 
-"nmap <silent> <leader>j :Tbbn<cr>
-"nmap <silent> <leader>k :Tbbp<cr>
-"nmap <silent> <leader>d :Tbbd<cr>
+nmap <silent> <leader>h :Tbbn<cr>
+nmap <silent> <leader>l :Tbbp<cr>
+nmap <silent> <leader>d :Tbbd<cr>
 
 "----------------------------------------------------------
 " easy-motion
@@ -246,28 +246,22 @@ endif
 "----------------------------------------------------------
 " Nerd Tree
 "----------------------------------------------------------
-let NERDChristmasTree=0
-let NERDTreeWinSize=30
-let NERDTreeChDirMode=2
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
-" let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
 let NERDTreeShowBookmarks=1
 let NERDTreeWinPos = "right"
-"let NERDTreeWinPos = "left"
 
-" nerdcommenter
-let NERDSpaceDelims=1
-" nmap <D-/> :NERDComToggleComment<cr>
-let NERDCompactSexyComs=1
 "当打开vim且没有文件时自动打开NERDTree & Tagbar,否则只打开Tagbar
 autocmd vimenter * call CallPlugin()
 " 只剩 NERDTree时自动关闭
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 func! CallPlugin()
   if !argc()
     exec "NERDTree"
     exec "Tagbar"
+  elseif &filetype == 'c' || &filetype == 'cpp'
+    exec "NERDTree"
+    exec "Tagbar"
+    exec "SrcExpl"
   endif
 endfunc
 "----------------------------------------------------------
@@ -286,10 +280,12 @@ let g:SrcExpl_gobackKey = "<SPACE>"
 " // In order to avoid conflicts, the Source Explorer should know what plugins
 " // except itself are using buffers. And you need add their buffer names into
 " // below listaccording to the command ":buffers!"
-"let g:SrcExpl_pluginList = [
-"        \ "__Tag_bar__",
-"        \ "_NERD_tree_"
-"    \ ]
+let g:SrcExpl_pluginList = [
+        \ "__Tagbar__",
+        \ "NERD_tree_1",
+        \ "[BufExplorer]",
+        \ "Source_Explorer"
+    \ ]
 
 " // Enable/Disable the local definition searching, and note that this is not
 " // guaranteed to work, the Source Explorer doesn't check the syntax for now.
@@ -409,8 +405,8 @@ func! CompileRunGcc()
 	elseif &filetype == 'cpp'
 		exec "!g++ % -o %<"
 		exec "!time ./%<"
-	elseif &filetype == 'java' 
-		exec "!javac %" 
+	elseif &filetype == 'java'
+		exec "!javac %"
 		exec "!time java %<"
 	elseif &filetype == 'sh'
 		:!time bash %
@@ -566,18 +562,18 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"新建.c,.h,.sh,.java文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
-""定义函数SetTitle，自动插入文件头 
-func SetTitle() 
-	"如果文件类型为.sh文件 
-	if &filetype == 'sh' 
-		call setline(1,"\#!/bin/bash") 
-		call append(line("."), "") 
+"新建.c,.h,.sh,.java文件，自动插入文件头
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
+""定义函数SetTitle，自动插入文件头
+func SetTitle()
+	"如果文件类型为.sh文件
+	if &filetype == 'sh'
+		call setline(1,"\#!/bin/bash")
+		call append(line("."), "")
     elseif &filetype == 'python'
         call setline(1,"#!/usr/bin/env python")
         call append(line("."),"# coding=utf-8")
-	    call append(line(".")+1, "") 
+	    call append(line(".")+1, "")
 
     elseif &filetype == 'ruby'
         call setline(1,"#!/usr/bin/env ruby")
@@ -587,12 +583,12 @@ func SetTitle()
     elseif &filetype == 'mkd'
         call setline(1,"<head><meta charset=\"UTF-8\"></head>")
 	else
-		call setline(1, "/*************************************************************************") 
-		call append(line("."), "	> File Name:    ".expand("%")) 
-		call append(line(".")+1, "	> Author:       Zhu Zhenwei") 
-		call append(line(".")+2, "	> Mail:         losted.leo@gmail.com") 
-		call append(line(".")+3, "	> Created Time: ".strftime("%c")) 
-		call append(line(".")+4, " ************************************************************************/") 
+		call setline(1, "/*************************************************************************")
+		call append(line("."), "	> File Name:    ".expand("%"))
+		call append(line(".")+1, "	> Author:       Zhu Zhenwei")
+		call append(line(".")+2, "	> Mail:         losted.leo@gmail.com")
+		call append(line(".")+3, "	> Created Time: ".strftime("%c"))
+		call append(line(".")+4, " ************************************************************************/")
 		call append(line(".")+5, "")
 	endif
 	if expand("%:e") == 'cpp'

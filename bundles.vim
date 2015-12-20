@@ -41,6 +41,7 @@ Bundle 'nathanaelkane/vim-indent-guides'
 " IDE features
 "--------------
 "Bundle 'fholgado/minibufexpl.vim'
+"Bundle 'zhaocai/GoldenView.Vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'humiaozuzu/TabBar'
 Bundle 'majutsushi/tagbar'
