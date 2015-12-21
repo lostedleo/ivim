@@ -24,6 +24,7 @@ alias gitco='git commit -m'
 alias gitpl='git pull'
 alias gitdf='git diff'
 alias gitps='git push'
+alias gitck='git checkout'
 
 #svn alias
 svnu='svn up'
