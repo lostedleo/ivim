@@ -193,8 +193,8 @@ hi Tb_Changed guifg=blue ctermfg=white
 hi Tb_VisibleNormal ctermbg=blue ctermfg=white
 hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
 
-nmap <silent> <leader>h :Tbbn<cr>
-nmap <silent> <leader>l :Tbbp<cr>
+nmap <silent> <leader>h :Tbbp<cr>
+nmap <silent> <leader>l :Tbbn<cr>
 nmap <silent> <leader>d :Tbbd<cr>
 
 "----------------------------------------------------------
