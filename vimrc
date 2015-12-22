@@ -37,7 +37,7 @@ set cursorline cursorcolumn
 
 " search
 set incsearch
-"set highlight 	" conflict with highlight current line
+"set highlight   " conflict with highlight current line
 set ignorecase
 set smartcase
 "将tab替换为空格
@@ -105,23 +105,23 @@ let g:html_indent_style1 = "inc"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Rainbow parentheses for Lisp and variants
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
+      \ ['brown',       'RoyalBlue3'],
+      \ ['Darkblue',    'SeaGreen3'],
+      \ ['darkgray',    'DarkOrchid3'],
+      \ ['darkgreen',   'firebrick3'],
+      \ ['darkcyan',    'RoyalBlue3'],
+      \ ['darkred',     'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['brown',       'firebrick3'],
+      \ ['gray',        'RoyalBlue3'],
+      \ ['black',       'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['Darkblue',    'firebrick3'],
+      \ ['darkgreen',   'RoyalBlue3'],
+      \ ['darkcyan',    'SeaGreen3'],
+      \ ['darkred',     'DarkOrchid3'],
+      \ ['red',         'firebrick3'],
+      \ ]
 let g:rbpt_max = 16
 autocmd Syntax lisp,scheme,clojure,racket RainbowParenthesesToggle
 
@@ -142,7 +142,7 @@ let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags
 "
 set autochdir
 nmap tl :Tlist<cr>
-map tu :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<CR>
+map tu :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<CR><CR>
 "设置tags
 set tags=
 
@@ -156,18 +156,18 @@ endif
 " Cscope配置
 "----------------------------------------------------------
 if has("cscope")
-    set csprg=/usr/local/bin/cscope
-    set csto=0
-    set cst
-    set nocsverb
-    " add any database in current directory
-    if filereadable("cscope.out")
-        cs add cscope.out
-        " else add database pointed to by environment
-    elseif $CSCOPE_DB != ""
-        cs add $CSCOPE_DB
-    endif
-    set csverb
+  set csprg=/usr/local/bin/cscope
+  set csto=0
+  set cst
+  set nocsverb
+  " add any database in current directory
+  if filereadable("cscope.out")
+    cs add cscope.out
+    " else add database pointed to by environment
+  elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
+  endif
+  set csverb
 endif
 
 nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<CR><CR>
@@ -181,6 +181,13 @@ nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+map <silent> tc :call MakeCscope()<CR><CR><CR>
+
+func! MakeCscope()
+  exec "!find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.cpp\" -o -name \"*.cc\" > cscope.files"
+  exec "!cscope -Rbqk -i ./cscope.files"
+endfunc
 
 "----------------------------------------------------------
 " tabbar
@@ -235,12 +242,12 @@ if executable('coffeetags')
         \ }
 
   let g:tagbar_type_markdown = {
-    \ 'ctagstype' : 'markdown',
-    \ 'sort' : 0,
-    \ 'kinds' : [
+        \ 'ctagstype' : 'markdown',
+        \ 'sort' : 0,
+        \ 'kinds' : [
         \ 'h:sections'
-    \ ]
-    \ }
+        \ ]
+        \ }
 endif
 
 "----------------------------------------------------------
@@ -281,11 +288,11 @@ let g:SrcExpl_gobackKey = "<SPACE>"
 " // except itself are using buffers. And you need add their buffer names into
 " // below listaccording to the command ":buffers!"
 let g:SrcExpl_pluginList = [
-        \ "__Tagbar__",
-        \ "NERD_tree_1",
-        \ "[BufExplorer]",
-        \ "Source_Explorer"
-    \ ]
+      \ "__Tagbar__",
+      \ "NERD_tree_1",
+      \ "[BufExplorer]",
+      \ "Source_Explorer"
+      \ ]
 
 " // Enable/Disable the local definition searching, and note that this is not
 " // guaranteed to work, the Source Explorer doesn't check the syntax for now.
@@ -398,62 +405,62 @@ nnoremap <C-n> :cn<cr>
 "C，C++ 按F5编译运行
 nmap <C-F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
-	exec "w"
-	if &filetype == 'c'
-		exec "!g++ % -o %<"
-		exec "!time ./%<"
-	elseif &filetype == 'cpp'
-		exec "!g++ % -o %<"
-		exec "!time ./%<"
-	elseif &filetype == 'java'
-		exec "!javac %"
-		exec "!time java %<"
-	elseif &filetype == 'sh'
-		:!time bash %
-	elseif &filetype == 'python'
-		exec "!time python2.7 %"
-    elseif &filetype == 'html'
-        exec "!firefox % &"
-    elseif &filetype == 'go'
-        exec "!go build %<"
-        exec "!time go run %"
-    elseif &filetype == 'mkd'
-        exec "!~/.vim/markdown.pl % > %.html &"
-        exec "!firefox %.html &"
-	endif
+  exec "w"
+  if &filetype == 'c'
+    exec "!g++ % -o %<"
+    exec "!time ./%<"
+  elseif &filetype == 'cpp'
+    exec "!g++ % -o %<"
+    exec "!time ./%<"
+  elseif &filetype == 'java'
+    exec "!javac %"
+    exec "!time java %<"
+  elseif &filetype == 'sh'
+    :!time bash %
+  elseif &filetype == 'python'
+    exec "!time python2.7 %"
+  elseif &filetype == 'html'
+    exec "!firefox % &"
+  elseif &filetype == 'go'
+    exec "!go build %<"
+    exec "!time go run %"
+  elseif &filetype == 'mkd'
+    exec "!~/.vim/markdown.pl % > %.html &"
+    exec "!firefox %.html &"
+  endif
 endfunc
 "C,C++的调试
 map <F8> :call Rungdb()<CR>
 func! Rungdb()
-	exec "w"
-	exec "!g++ % -g -o %<"
-	exec "!gdb ./%<"
+  exec "w"
+  exec "!g++ % -g -o %<"
+  exec "!gdb ./%<"
 endfunc
 
 "代码格式优化化
 map <C-F6> :call FormartSrc()<CR><CR>
 "定义FormartSrc()
 func FormartSrc()
-    exec "w"
-    if &filetype == 'c'
-        exec "!astyle --style=ansi -a --suffix=none %"
-    elseif &filetype == 'cpp' || &filetype == 'hpp'
-        exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
-    elseif &filetype == 'perl'
-        exec "!astyle --style=gnu --suffix=none %"
-    elseif &filetype == 'py'||&filetype == 'python'
-        exec "r !autopep8 -i --aggressive %"
-    elseif &filetype == 'java'
-        exec "!astyle --style=java --suffix=none %"
-    elseif &filetype == 'jsp'
-        exec "!astyle --style=gnu --suffix=none %"
-    elseif &filetype == 'xml'
-        exec "!astyle --style=gnu --suffix=none %"
-    else
-        exec "normal gg=G"
-        return
-    endif
-    exec "e! %"
+  exec "w"
+  if &filetype == 'c'
+    exec "!astyle --style=ansi -a --suffix=none %"
+  elseif &filetype == 'cpp' || &filetype == 'hpp'
+    exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
+  elseif &filetype == 'perl'
+    exec "!astyle --style=gnu --suffix=none %"
+  elseif &filetype == 'py'||&filetype == 'python'
+    exec "r !autopep8 -i --aggressive %"
+  elseif &filetype == 'java'
+    exec "!astyle --style=java --suffix=none %"
+  elseif &filetype == 'jsp'
+    exec "!astyle --style=gnu --suffix=none %"
+  elseif &filetype == 'xml'
+    exec "!astyle --style=gnu --suffix=none %"
+  else
+    exec "normal gg=G"
+    return
+  endif
+  exec "e! %"
 endfunc
 "结束定义FormartSrc
 
@@ -461,10 +468,10 @@ endfunc
 ""实用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("autocmd")
-      autocmd BufReadPost *
-          \ if line("'\"") > 0 && line("'\"") <= line("$") |
-          \   exe "normal g`\"" |
-          \ endif
+  autocmd BufReadPost *
+        \ if line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
 endif
 "------------------
 " Useful Functions
@@ -539,24 +546,24 @@ nnoremap ; :
 
 " for macvim
 if has("gui_running")
-    set go=aAce  " remove toolbar
-    "set transparency=30
-    set guifont=Monaco:h13
-    set showtabline=2
-    set columns=140
-    set lines=40
-    noremap <D-M-Left> :tabprevious<cr>
-    noremap <D-M-Right> :tabnext<cr>
-    map <D-1> 1gt
-    map <D-2> 2gt
-    map <D-3> 3gt
-    map <D-4> 4gt
-    map <D-5> 5gt
-    map <D-6> 6gt
-    map <D-7> 7gt
-    map <D-8> 8gt
-    map <D-9> 9gt
-    map <D-0> :tablast<CR>
+  set go=aAce  " remove toolbar
+  "set transparency=30
+  set guifont=Monaco:h13
+  set showtabline=2
+  set columns=140
+  set lines=40
+  noremap <D-M-Left> :tabprevious<cr>
+  noremap <D-M-Right> :tabnext<cr>
+  map <D-1> 1gt
+  map <D-2> 2gt
+  map <D-3> 3gt
+  map <D-4> 4gt
+  map <D-5> 5gt
+  map <D-6> 6gt
+  map <D-7> 7gt
+  map <D-8> 8gt
+  map <D-9> 9gt
+  map <D-0> :tablast<CR>
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -566,50 +573,50 @@ endif
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
 ""定义函数SetTitle，自动插入文件头
 func SetTitle()
-	"如果文件类型为.sh文件
-	if &filetype == 'sh'
-		call setline(1,"\#!/bin/bash")
-		call append(line("."), "")
-    elseif &filetype == 'python'
-        call setline(1,"#!/usr/bin/env python")
-        call append(line("."),"# coding=utf-8")
-	    call append(line(".")+1, "")
+  "如果文件类型为.sh文件
+  if &filetype == 'sh'
+    call setline(1,"\#!/bin/bash")
+    call append(line("."), "")
+  elseif &filetype == 'python'
+    call setline(1,"#!/usr/bin/env python")
+    call append(line("."),"# coding=utf-8")
+    call append(line(".")+1, "")
 
-    elseif &filetype == 'ruby'
-        call setline(1,"#!/usr/bin/env ruby")
-        call append(line("."),"# encoding: utf-8")
-	    call append(line(".")+1, "")
+  elseif &filetype == 'ruby'
+    call setline(1,"#!/usr/bin/env ruby")
+    call append(line("."),"# encoding: utf-8")
+    call append(line(".")+1, "")
 
-    elseif &filetype == 'mkd'
-        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
-	else
-		call setline(1, "/*************************************************************************")
-		call append(line("."), "	> File Name:    ".expand("%"))
-		call append(line(".")+1, "	> Author:       Zhu Zhenwei")
-		call append(line(".")+2, "	> Mail:         losted.leo@gmail.com")
-		call append(line(".")+3, "	> Created Time: ".strftime("%c"))
-		call append(line(".")+4, " ************************************************************************/")
-		call append(line(".")+5, "")
-	endif
-	if expand("%:e") == 'cpp'
-		call append(line(".")+6, "#include<iostream>")
-		call append(line(".")+7, "using namespace std;")
-		call append(line(".")+8, "")
-	endif
-	if &filetype == 'c'
-		call append(line(".")+6, "#include<stdio.h>")
-		call append(line(".")+7, "")
-	endif
-	if expand("%:e") == 'h'
-		call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
-		call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
-		call append(line(".")+8, "#endif")
-	endif
-	if &filetype == 'java'
-		call append(line(".")+6,"public class ".expand("%:r"))
-		call append(line(".")+7,"")
-	endif
-	"新建文件后，自动定位到文件末尾
+  elseif &filetype == 'mkd'
+    call setline(1,"<head><meta charset=\"UTF-8\"></head>")
+  else
+    call setline(1, "/*************************************************************************")
+    call append(line("."), "  > File Name:    ".expand("%"))
+    call append(line(".")+1, "  > Author:       Zhu Zhenwei")
+    call append(line(".")+2, "  > Mail:         losted.leo@gmail.com")
+    call append(line(".")+3, "  > Created Time: ".strftime("%c"))
+    call append(line(".")+4, " ************************************************************************/")
+    call append(line(".")+5, "")
+  endif
+  if expand("%:e") == 'cpp'
+    call append(line(".")+6, "#include<iostream>")
+    call append(line(".")+7, "using namespace std;")
+    call append(line(".")+8, "")
+  endif
+  if &filetype == 'c'
+    call append(line(".")+6, "#include<stdio.h>")
+    call append(line(".")+7, "")
+  endif
+  if expand("%:e") == 'h'
+    call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
+    call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
+    call append(line(".")+8, "#endif")
+  endif
+  if &filetype == 'java'
+    call append(line(".")+6,"public class ".expand("%:r"))
+    call append(line(".")+7,"")
+  endif
+  "新建文件后，自动定位到文件末尾
 endfunc
 autocmd BufNewFile * normal G
 
