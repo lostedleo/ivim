@@ -182,6 +182,8 @@ nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
+nmap <Leader>f :Ack <C-R>=expand("<cword>")<CR><CR>
+
 map <silent> tc :call MakeCscope()<CR><CR><CR>
 
 func! MakeCscope()
