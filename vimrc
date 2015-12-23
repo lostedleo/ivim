@@ -254,6 +254,7 @@ endif
 " Nerd Tree
 "----------------------------------------------------------
 let NERDTreeShowBookmarks=1
+let g:NERDTreeWinSize=30
 let NERDTreeWinPos = "right"
 
 "当打开vim且没有文件时自动打开NERDTree & Tagbar,否则只打开Tagbar
