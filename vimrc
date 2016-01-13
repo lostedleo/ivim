@@ -578,7 +578,7 @@ set selectmode=mouse,key
 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
 set report=0
 " 在被分割的窗口间显示空白，便于阅读
-set fillchars=vert:\ ,stl:\ ,stlnc:\
+"set fillchars=vert:\ ,stl:\ ,stlnc:\
 " 高亮显示匹配的括号
 set showmatch
 
