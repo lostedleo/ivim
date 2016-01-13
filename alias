@@ -29,3 +29,6 @@ alias gitck='git checkout'
 #svn alias
 svnu='svn up'
 svnco='svn commit -m'
+svnck='svn checkout'
+svncl='svn cleanup'
+svndf='svn diff'
