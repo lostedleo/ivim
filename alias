@@ -27,8 +27,8 @@ alias gitps='git push'
 alias gitck='git checkout'
 
 #svn alias
-svnu='svn up'
-svnco='svn commit -m'
-svnck='svn checkout'
-svncl='svn cleanup'
-svndf='svn diff'
+alias svnu='svn up'
+alias svnco='svn commit -m'
+alias svnck='svn checkout'
+alias svncl='svn cleanup'
+alias svndf='svn diff'
