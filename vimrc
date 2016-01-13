@@ -236,7 +236,7 @@ if has("cscope")
   set csverb
 endif
 
-nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<CR><CR>
+"nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<CR><CR>
 nmap g<C-/> :cs find 0 <C-R>=expand(“<cword>”)<CR><CR>
 
 nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
@@ -635,10 +635,10 @@ if has("gui_running")
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""新文件标题
+" 新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
+autocmd BufNewFile *.cc,*.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
 ""定义函数SetTitle，自动插入文件头
 func SetTitle()
   "如果文件类型为.sh文件
@@ -688,3 +688,48 @@ func SetTitle()
 endfunc
 autocmd BufNewFile * normal G
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" C++ Coding
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设置 BUILD 文件的 filetype 为 python 文件
+autocmd BufEnter BUILD set filetype=python
+" 设置 protobuffer 文件语法解析
+augroup filetype
+  au! BufRead,BufNewFile *.proto setfiletype proto
+augroup end
+
+
+" 查找 codebase 根目录
+" 若找到，则设置文件搜索路径和 make 指令
+functio! FindProjectRootDir()
+    let rootfile = findfile("BLADE_ROOT", ".;")
+    " in project root dir
+    if rootfile == "BLADE_ROOT"
+        return "."
+    endif
+    return substitute(rootfile, "/BLADE_ROOT$", "", "")
+endfunction
+function! AutoSetPath()
+  if exists("b:did_auto_set_path")
+    return
+  endif
+  let b:did_auto_set_path = 1
+
+  let l:project_root = FindProjectRootDir()
+  if l:project_root != ""
+    if l:project_root == "."
+      exec "set path+=" . getcwd() . "/.build/pb/c++"
+    else
+      exec "set path+=" . project_root
+      exec "set path+=" . project_root . "/.build/pb/c++"
+    endif
+
+    " 当前目录已经有 makefile 了，则以当前目录为准，不进行特殊设置
+    if filereadable("./Makefile") || filereadable("./makefile")
+      return
+    endif
+
+    exec "set makeprg=make\\ -C\\ " . project_root
+  endif
+endfunction
+call AutoSetPath()
