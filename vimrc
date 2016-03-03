@@ -138,8 +138,8 @@ let Tlist_Use_Right_Window = 0  " 在右侧显示窗口
 let Tlist_Compart_Format = 1    " 压缩方式
 let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer
 let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags
-"let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树
-"let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树
+let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
 "
 set autochdir
 nmap tl :Tlist<cr>
@@ -215,6 +215,8 @@ endfunction
 " call AddTagsInCwdPath()
 
 if filereadable("tags")
+  :call AddTagsInCwdPath()
+else
   :call AddTagsInCwdPath()
 endif
 
@@ -701,7 +703,7 @@ augroup end
 
 " 查找 codebase 根目录
 " 若找到，则设置文件搜索路径和 make 指令
-functio! FindProjectRootDir()
+function! FindProjectRootDir()
     let rootfile = findfile("BLADE_ROOT", ".;")
     " in project root dir
     if rootfile == "BLADE_ROOT"
