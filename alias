@@ -15,7 +15,7 @@ alias tmuxnw='tmux new -s'
 alias tmuxkl='tmux kill-session -t'
 
 #screenrc alias
-alias screenat='screenrc -rd'
+alias screenat='screen -rd'
 alias screennw='screen -S'
 
 #git alias
