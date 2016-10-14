@@ -35,8 +35,10 @@ syntax on
 color torte
 " color molokai
 " color xemacs
+
 " color solarized
 " set background=dark
+" let g:solarized_termcolors=256
 
 set cul             "高亮光标所在行
 set cuc
