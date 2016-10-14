@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/lion/Study/zsummerX/src'
+let g:netrw_dirhist_2='/Users/lion/Study/zsummerX/src/epoll'
+let g:netrw_dirhist_3='/Users/lion/Study/ssdb/tools'
+let g:netrw_dirhist_4='/Users/lion/Temp/prof'
+let g:netrw_dirhist_5='/Users/lion/Temp/config_server'
+let g:netrw_dirhist_6='/usr/local/Cellar/boost149/1.49.0/include/boost'
+let g:netrw_dirhist_7='/Users/lion/Study/oceanbase-master'

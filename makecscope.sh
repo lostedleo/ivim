@@ -6,7 +6,7 @@ usage()
     echo "I will create cscope db in project current path or ~/cscope/project_name"
 }
 if [ $# -ne 1 ]
-then 
+then
     usage
     exit
 fi

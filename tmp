@@ -1,0 +1,782 @@
+diff --git a/alias b/alias
+index a913066..65883fa 100644
+--- a/alias
++++ b/alias
+@@ -15,7 +15,7 @@ alias tmuxnw='tmux new -s'
+ alias tmuxkl='tmux kill-session -t'
+ 
+ #screenrc alias
+-alias screenat='screen -rd'
++alias screenat='screenrc -rd'
+ alias screennw='screen -S'
+ 
+ #git alias
+diff --git a/bundles.vim b/bundles.vim
+index 9febb9a..72ae543 100755
+--- a/bundles.vim
++++ b/bundles.vim
+@@ -11,16 +11,20 @@ Bundle 'gmarik/vundle'
+ "------------------
+ " Code Completions
+ "------------------
++" Bundle 'ajh17/VimCompletesMe'
++" Bundle 'Shougo/neocomplete.vim'
++" Bundle 'Valloric/YouCompleteMe'
+ Bundle 'Shougo/neocomplcache'
+-Bundle 'mattn/emmet-vim'
++" Bundle 'mattn/emmet-vim'
+ Bundle 'Raimondi/delimitMate'
+ Bundle 'ervandew/supertab'
+-" snippets
+-Bundle 'garbas/vim-snipmate'
+-Bundle 'honza/vim-snippets'
++
+ "------ snipmate dependencies -------
++" snippets
+ Bundle 'MarcWeber/vim-addon-mw-utils'
+ Bundle 'tomtom/tlib_vim'
++Bundle 'garbas/vim-snipmate'
++Bundle 'honza/vim-snippets'
+ 
+ "-----------------
+ " Fast navigation
+@@ -31,38 +35,40 @@ Bundle 'Lokaltog/vim-easymotion'
+ "--------------
+ " Fast editing
+ "--------------
+-Bundle 'tpope/vim-surround'
++" Bundle 'tpope/vim-surround'
+ Bundle 'scrooloose/nerdcommenter'
+ Bundle 'sjl/gundo.vim'
+ Bundle 'godlygeek/tabular'
+-Bundle 'nathanaelkane/vim-indent-guides'
++" Bundle 'nathanaelkane/vim-indent-guides'
+ 
+ "--------------
+ " IDE features
+ "--------------
+-"Bundle 'fholgado/minibufexpl.vim'
+-"Bundle 'zhaocai/GoldenView.Vim'
++" Bundle 'fholgado/minibufexpl.vim'
++" Bundle 'zhaocai/GoldenView.Vim'
+ Bundle 'scrooloose/nerdtree'
+ "Bundle 'vim-scripts/TabBar'
+ "Bundle 'humiaozuzu/TabBar'
+ Bundle 'majutsushi/tagbar'
+-Bundle 'wesleyche/SrcExpl'
++"Bundle 'wesleyche/SrcExpl'
+ Bundle 'mileszs/ack.vim'
+ Bundle 'kien/ctrlp.vim'
+-Bundle 'tpope/vim-fugitive'
+-Bundle 'lostedleo/vim-powerline'
+-Bundle 'scrooloose/syntastic'
++
++" git plugin
++" Bundle 'tpope/vim-fugitive'    
++Bundle 'Lokaltog/vim-powerline'
++"Bundle 'scrooloose/syntastic'
+ Bundle 'bronson/vim-trailing-whitespace'
+ Bundle 'lostedleo/taglist'
+-Bundle 'lostedleo/bufexplorer'
++Bundle 'jlanzarotta/bufexplorer'
+ Bundle 'lostedleo/avim'
+-Bundle 'lostedleo/vimgdb-for-vim7.3'
++"Bundle 'lostedleo/vimgdb-for-vim7.3'
+ 
+ "-------------
+ " Other Utils
+ "-------------
+ " Bundle 'humiaozuzu/fcitx-status'
+-Bundle 'nvie/vim-togglemouse'
++" Bundle 'nvie/vim-togglemouse'
+ 
+ "----------------------------------------
+ " Syntax/Indent for language enhancement
+@@ -76,7 +82,7 @@ Bundle 'nvie/vim-togglemouse'
+ "------- web frontend ----------
+ " Bundle 'othree/html5.vim'
+ " Bundle 'tpope/vim-haml'
+-Bundle 'pangloss/vim-javascript'
++" Bundle 'pangloss/vim-javascript'
+ " Bundle 'kchmck/vim-coffee-script'
+ " Bundle 'nono/jquery.vim'
+ " Bundle 'groenewege/vim-less'
+@@ -103,7 +109,7 @@ Bundle 'pangloss/vim-javascript'
+ " Color Schemes
+ "--------------
+ Bundle 'rickharris/vim-blackboard'
+-" Bundle 'altercation/vim-colors-solarized'
++Bundle 'altercation/vim-colors-solarized'
+ Bundle 'rickharris/vim-monokai'
+ Bundle 'tpope/vim-vividchalk'
+ Bundle 'Lokaltog/vim-distinguished'
+diff --git a/config b/config
+index 3e172f5..88693b1 100644
+--- a/config
++++ b/config
+@@ -1,4 +1,4 @@
+ host *
+ ControlMaster auto
+ ControlPath ~/.ssh/master-%r@%h:%p
+-ServerAliveInterval 60
++ServerAliveInterval 30
+diff --git a/makecscope.sh b/makecscope.sh
+index 764ab02..0f87e44 100755
+--- a/makecscope.sh
++++ b/makecscope.sh
+@@ -6,7 +6,7 @@ usage()
+     echo "I will create cscope db in project current path or ~/cscope/project_name"
+ }
+ if [ $# -ne 1 ]
+-then 
++then
+     usage
+     exit
+ fi
+diff --git a/screenrc b/screenrc
+index e8c292b..88c671d 100644
+--- a/screenrc
++++ b/screenrc
+@@ -15,33 +15,33 @@
+ #   This is not a comprehensive list of options, look at the screen manual for
+ #   details on everything that you can put in this file.
+ #
+- 
++
+ # ------------------------------------------------------------------------------
+ # SCREEN SETTINGS
+ # ------------------------------------------------------------------------------
+- 
++
+ startup_message off
+ #nethack on
+- 
++
+ #defflow on # will force screen to process ^S/^Q
+ deflogin on
+ autodetach on
+ 
+ #修改前置命令键
+ escape ^Jj
+- 
++
+ # turn visual bell on
+ vbell off
+ vbell_msg "   Wuff  ----  Wuff!!  "
+- 
++
+ # define a bigger scrollback, default is 100 lines
+ scrollback 11024
+ defscrollback 11024
+- 
++
+ # ------------------------------------------------------------------------------
+ # SCREEN KEYBINDINGS
+ # ------------------------------------------------------------------------------
+- 
++
+ # Remove some stupid / dangerous key bindings
+ bind ^k
+ #bind L
+@@ -52,19 +52,19 @@ bind K kill
+ bind I login on
+ bind O login off
+ bind } history
+- 
++
+ # An example of a "screen scraper" which will launch urlview on the current
+ # screen window
+ #
+ #bind ^B eval "hardcopy_append off" "hardcopy -h $HOME/.screen-urlview" "screen urlview $HOME/.screen-urlview"
+- 
++
+ # ------------------------------------------------------------------------------
+ # TERMINAL SETTINGS
+ # ------------------------------------------------------------------------------
+- 
++
+ # The vt100 description does not mention "dl". *sigh*
+ termcapinfo vt100 dl=5\E[M
+- 
++
+ # turn sending of screen messages to hardstatus off
+ hardstatus on
+ # Set the hardstatus prop on gui terms to set the titlebar/icon title
+@@ -74,36 +74,36 @@ hardstatus string "%h%? users: %u%?"
+ #状态栏
+ hardstatus alwayslastline "%{=b}%{b}%-w%{.BW}%10>%n*%t%{-}%+w%< %=%{kG}%C%A , %Y-%m-%d"
+ #标题栏
+- 
+- 
+- 
++
++
++
+ # An alternative hardstatus to display a bar at the bottom listing the
+ # windownames and highlighting the current windowname in blue. (This is only
+ # enabled if there is no hardstatus setting for your terminal)
+ #
+ #hardstatus lastline "%-Lw%{= BW}%50>%n%f* %t%{-}%+Lw%<"
+- 
++
+ # set these terminals up to be 'optimal' instead of vt100
+ termcapinfo xterm*|linux*|rxvt*|Eterm* OP
+- 
++
+ # Change the xterm initialization string from is2=\E[!p\E[?3;4l\E[4l\E>
+ # (This fixes the "Aborted because of window size change" konsole symptoms found
+ #  in bug #134198)
+ termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+- 
++
+ # To get screen to add lines to xterm's scrollback buffer, uncomment the
+ # following termcapinfo line which tells xterm to use the normal screen buffer
+ # (which has scrollback), not the alternate screen buffer.
+ #
+ #termcapinfo xterm|xterms|xs|rxvt ti@:te@
+- 
++
+ # Enable non-blocking mode to better cope with flaky ssh connections.
+ defnonblock 5
+- 
++
+ # ------------------------------------------------------------------------------
+ # STARTUP SCREENS
+ # ------------------------------------------------------------------------------
+- 
++
+ # Example of automatically running some programs in windows on screen startup.
+ #
+ #   The following will open top in the first window, an ssh session to monkey
+@@ -114,6 +114,6 @@ defnonblock 5
+ # screen -t monkey ssh monkey
+ # screen -t mail 8 mutt
+ # screen -t daemon 9 tail -f /var/log/daemon.log
+- 
++
+ #兼容shell 使得.bashrc .profile /etc/profile等里面的别名等设置生效
+ shell -$SHELL
+diff --git a/tmux.conf b/tmux.conf
+index 2ccca28..ec584ec 100644
+--- a/tmux.conf
++++ b/tmux.conf
+@@ -16,7 +16,7 @@ bind j selectp -D #选择下窗口
+ bind h selectp -L #选择左窗口
+ bind l selectp -R #选择右窗口
+ 
+-#setw automatic-rename on
++# setw automatic-rename on
+ 
+ #  #设置pan前景色  
+ #  set -g pane-border-fg green  
+@@ -55,7 +55,7 @@ bind l selectp -R #选择右窗口
+ #  #设置status bar格式
+   set -g status-left-length 40
+   set -g status-left "#[fg=green]#S #[fg=yellow]#I #[fg=cyan]#P"
+-  set -g status-right "#[fg=cyan]%d %b %R"
++  set -g status-right "#[fg=cyan]%m-%d %H:%M:%S "
+   set -g status-interval 60
+   set -g status-justify centre
+ #  #开启window事件提示
+diff --git a/vimrc b/vimrc
+index ae4d64b..2433325 100755
+--- a/vimrc
++++ b/vimrc
+@@ -3,6 +3,21 @@
+ """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ source ~/.vim/bundles.vim
+ 
++" define functions check plugin exist or not in vundle
++let g:bundle_path = $HOME . "/.vim/bundle"
++function! s:GetPluginPath(name)
++  let l:plugin_path = g:bundle_path . "/" . a:name
++  return l:plugin_path
++endfunction
++
++function! ExistPlugin(name)
++  if isdirectory(s:GetPluginPath(a:name))
++    return 1
++  else
++    return 0
++  endif
++endfunction
++
+ " encoding dectection
+ set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+ 
+@@ -13,17 +28,16 @@ filetype plugin indent on
+ syntax on
+ 
+ """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+-" Vim基本配置
++" Vim Base Config
+ """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+-"--------
+-" Vim UI
+-"--------
+-" color desert     " 设置背景主题
+-color torte     " 设置背景主题
+-" color molokai     " 设置背景主题
+-"color xemacs " 设置背景主题
+-
++" Vim UI vim color config
++" color desert
++color torte
++" color molokai
++" color xemacs
++" color solarized
+ " set background=dark
++
+ set cul             "高亮光标所在行
+ set cuc
+ set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示
+@@ -46,7 +60,6 @@ nmap tt :%s/\t/  /g<CR>
+ 
+ " editor settings
+ set history=10000
+-set nocompatible
+ set nofoldenable                                                  " disable folding"
+ set confirm                                                       " prompt when existing from an unsaved file
+ set backspace=indent,eol,start                                    " More powerful backspacing
+@@ -104,30 +117,8 @@ let g:html_indent_style1 = "inc"
+ """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ " Plugin settings
+ """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+-" Rainbow parentheses for Lisp and variants
+-let g:rbpt_colorpairs = [
+-      \ ['brown',       'RoyalBlue3'],
+-      \ ['Darkblue',    'SeaGreen3'],
+-      \ ['darkgray',    'DarkOrchid3'],
+-      \ ['darkgreen',   'firebrick3'],
+-      \ ['darkcyan',    'RoyalBlue3'],
+-      \ ['darkred',     'SeaGreen3'],
+-      \ ['darkmagenta', 'DarkOrchid3'],
+-      \ ['brown',       'firebrick3'],
+-      \ ['gray',        'RoyalBlue3'],
+-      \ ['black',       'SeaGreen3'],
+-      \ ['darkmagenta', 'DarkOrchid3'],
+-      \ ['Darkblue',    'firebrick3'],
+-      \ ['darkgreen',   'RoyalBlue3'],
+-      \ ['darkcyan',    'SeaGreen3'],
+-      \ ['darkred',     'DarkOrchid3'],
+-      \ ['red',         'firebrick3'],
+-      \ ]
+-let g:rbpt_max = 16
+-autocmd Syntax lisp,scheme,clojure,racket RainbowParenthesesToggle
+-
+-"----------------------------------------------------------
+-" CTags配置
++"----------------------------------------------------------
++" CTags
+ "----------------------------------------------------------
+ let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+ "默认打开Taglist
+@@ -138,8 +129,8 @@ let Tlist_Use_Right_Window = 0  " 在右侧显示窗口
+ let Tlist_Compart_Format = 1    " 压缩方式
+ let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer
+ let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags
+-"let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树
+-"let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
++let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树
++let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
+ "
+ set autochdir
+ nmap tl :Tlist<cr>
+@@ -216,61 +207,65 @@ endfunction
+ 
+ if filereadable("tags")
+   :call AddTagsInCwdPath()
++else
++  :call AddTagsInCwdPath()
+ endif
+ 
+ "----------------------------------------------------------
+ " Cscope配置
+ "----------------------------------------------------------
+ if has("cscope")
+-  set csprg=/usr/local/bin/cscope
+-  set csto=0
+-  set cst
+-  set nocsverb
+-  " add any database in current directory
+-  if filereadable("cscope.out")
+-    cs add cscope.out
+-    " else add database pointed to by environment
+-  elseif $CSCOPE_DB != ""
+-    cs add $CSCOPE_DB
+-  endif
+-  set csverb
++	set csprg=/usr/local/bin/cscope
++	set csto=0
++	set cst
++	set nocsverb
++	" add any database in current directory
++	if filereadable("cscope.out")
++		cs add cscope.out
++		" else add database pointed to by environment
++	elseif $CSCOPE_DB != ""
++		cs add $CSCOPE_DB
++	endif
++	set csverb
++
++	"nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<CR><CR>
++	nmap g<C-/> :cs find 0 <C-R>=expand(“<cword>”)<CR><CR>
++
++	nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
++	nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
++	nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
++	nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
++	nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
++	nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
++	nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR>$<CR>
++	nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
++
++	nmap <Leader>f :Ack <C-R>=expand("<cword>")<CR><CR>
++
++	map <silent> tc :call MakeCscope()<CR><CR><CR>
++
++	func! MakeCscope()
++		exec "!find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.cpp\" -o -name \"*.cc\" > cscope.files"
++		exec "!cscope -Rbqk -i ./cscope.files"
++	endfunc
+ endif
+ 
+-"nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<CR><CR>
+-nmap g<C-/> :cs find 0 <C-R>=expand(“<cword>”)<CR><CR>
+-
+-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+-nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR>$<CR>
+-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+-
+-nmap <Leader>f :Ack <C-R>=expand("<cword>")<CR><CR>
+-
+-map <silent> tc :call MakeCscope()<CR><CR><CR>
+-
+-func! MakeCscope()
+-  exec "!find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.cpp\" -o -name \"*.cc\" > cscope.files"
+-  exec "!cscope -Rbqk -i ./cscope.files"
+-endfunc
+-
+ "----------------------------------------------------------
+ " tabbar
+ "----------------------------------------------------------
+-let g:Tb_MaxSize = 2
+-let g:Tb_TabWrap = 1
+-
+-hi Tb_Normal guifg=white ctermfg=white
+-hi Tb_Changed guifg=blue ctermfg=white
+-hi Tb_VisibleNormal ctermbg=blue ctermfg=white
+-hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
+-
+-nmap <silent> <leader>h :Tbbp<cr>
+-nmap <silent> <leader>l :Tbbn<cr>
+-nmap <silent> <leader>d :Tbbd<cr>
++if ExistPlugin("tabbar")
++	let g:Tb_MaxSize = 2
++	let g:Tb_TabWrap = 1
++
++	hi Tb_Normal guifg=white ctermfg=white
++	hi Tb_Changed guifg=blue ctermfg=white
++	hi Tb_VisibleNormal ctermbg=blue ctermfg=white
++	hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
++
++	nmap <silent> <leader>h :Tbbp<cr>
++	nmap <silent> <leader>l :Tbbn<cr>
++	nmap <silent> <leader>d :Tbbd<cr>
++endif
+ 
+ "----------------------------------------------------------
+ " easy-motion
+@@ -293,30 +288,6 @@ let g:tagbar_width=30
+ "let g:tagbar_autofocus = 1
+ let g:tagbar_sort = 0
+ let g:tagbar_compact = 1
+-" tag for coffee
+-if executable('coffeetags')
+-  let g:tagbar_type_coffee = {
+-        \ 'ctagsbin' : 'coffeetags',
+-        \ 'ctagsargs' : '',
+-        \ 'kinds' : [
+-        \ 'f:functions',
+-        \ 'o:object',
+-        \ ],
+-        \ 'sro' : ".",
+-        \ 'kind2scope' : {
+-        \ 'f' : 'object',
+-        \ 'o' : 'object',
+-        \ }
+-        \ }
+-
+-  let g:tagbar_type_markdown = {
+-        \ 'ctagstype' : 'markdown',
+-        \ 'sort' : 0,
+-        \ 'kinds' : [
+-        \ 'h:sections'
+-        \ ]
+-        \ }
+-endif
+ 
+ "----------------------------------------------------------
+ " Nerd Tree
+@@ -335,42 +306,43 @@ func! CallPlugin()
+     exec "NERDTree"
+     exec "Tagbar"
+   elseif &filetype == 'c' || &filetype == 'cpp'
+-    exec "NERDTree"
+     exec "Tagbar"
+   endif
+ endfunc
+ "----------------------------------------------------------
+ " SrcExpl
+ "----------------------------------------------------------
+-" // The switch of the Source Explorer
+-nmap <silent> ts :SrcExplToggle<CR>
+-" // Set the height of Source Explorer window
+-let g:SrcExpl_winHeight = 8
+-" // Set 100 ms for refreshing the Source Explorer
+-let g:SrcExpl_refreshTime = 100
+-" // Set "Enter" key to jump into the exact definition context
+-let g:SrcExpl_jumpKey = "<ENTER>"
+-" // Set "Space" key for back from the definition context
+-let g:SrcExpl_gobackKey = "<SPACE>"
+-" // In order to avoid conflicts, the Source Explorer should know what plugins
+-" // except itself are using buffers. And you need add their buffer names into
+-" // below listaccording to the command ":buffers!"
+-let g:SrcExpl_pluginList = [
+-      \ "__Tagbar__",
+-      \ "NERD_tree_1",
+-      \ "[BufExplorer]",
+-      \ "Source_Explorer"
+-      \ ]
+-
+-" // Enable/Disable the local definition searching, and note that this is not
+-" // guaranteed to work, the Source Explorer doesn't check the syntax for now.
+-" // It only searches for a match with the keyword according to command 'gd'
+-let g:SrcExpl_searchLocalDef = 1
+-" // Do not let the Source Explorer update the tags file when opening
+-let g:SrcExpl_isUpdateTags = 0
+-" // Use 'Exuberant Ctags' with '--sort=foldcase -R .' or '-L cscope.files' to
+-" " // create/update the tags file
+-let g:SrcExpl_updateTagsCmd = "ctags --sort=foldcase -R ."
++if ExistPlugin("SrcExpl")
++	" // The switch of the Source Explorer
++	nmap <silent> ts :SrcExplToggle<CR>
++	" // Set the height of Source Explorer window
++	let g:SrcExpl_winHeight = 8
++	" // Set 100 ms for refreshing the Source Explorer
++	let g:SrcExpl_refreshTime = 100
++	" // Set "Enter" key to jump into the exact definition context
++	let g:SrcExpl_jumpKey = "<ENTER>"
++	" // Set "Space" key for back from the definition context
++	let g:SrcExpl_gobackKey = "<SPACE>"
++	" // In order to avoid conflicts, the Source Explorer should know what plugins
++	" // except itself are using buffers. And you need add their buffer names into
++	" // below listaccording to the command ":buffers!"
++	let g:SrcExpl_pluginList = [
++				\ "__Tagbar__",
++				\ "NERD_tree_1",
++				\ "[BufExplorer]",
++				\ "Source_Explorer"
++				\ ]
++
++	" // Enable/Disable the local definition searching, and note that this is not
++	" // guaranteed to work, the Source Explorer doesn't check the syntax for now.
++	" // It only searches for a match with the keyword according to command 'gd'
++	let g:SrcExpl_searchLocalDef = 1
++	" // Do not let the Source Explorer update the tags file when opening
++	let g:SrcExpl_isUpdateTags = 0
++	" // Use 'Exuberant Ctags' with '--sort=foldcase -R .' or '-L cscope.files' to
++	" " // create/update the tags file
++	let g:SrcExpl_updateTagsCmd = "ctags --sort=foldcase -R ."
++endif
+ 
+ "----------------------------------------------------------
+ " ZenCoding
+@@ -385,37 +357,126 @@ let g:user_emmet_expandabbr_key='<C-j>'
+ "----------------------------------------------------------
+ " NeoComplCache
+ "----------------------------------------------------------
+-let g:neocomplcache_enable_at_startup=1
+-let g:neoComplcache_disableautocomplete=1
+-"let g:neocomplcache_enable_underbar_completion = 1
+-"let g:neocomplcache_enable_camel_case_completion = 1
+-let g:neocomplcache_enable_smart_case=1
+-let g:neocomplcache_min_syntax_length = 3
+-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+-set completeopt-=preview
+-
+-imap <C-k> <Plug>(neocomplcache_snippets_force_expand)
+-smap <C-k> <Plug>(neocomplcache_snippets_force_expand)
+-imap <C-l> <Plug>(neocomplcache_snippets_force_jump)
+-smap <C-l> <Plug>(neocomplcache_snippets_force_jump)
+-
+-" Enable omni completion.
+-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+-autocmd FileType c setlocal omnifunc=ccomplete#Complete
+-if !exists('g:neocomplcache_omni_patterns')
+-  let g:neocomplcache_omni_patterns = {}
++if ExistPlugin("neocomplcache")
++  let g:neocomplcache_enable_at_startup=1
++  let g:neoComplcache_disableautocomplete=1
++  "let g:neocomplcache_enable_underbar_completion = 1
++  "let g:neocomplcache_enable_camel_case_completion = 1
++  let g:neocomplcache_enable_smart_case=1
++  let g:neocomplcache_min_syntax_length = 3
++  let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
++  set completeopt-=preview
++
++  imap <Leader> <C-k> <Plug>(neocomplcache_snippets_force_expand)
++  smap <Leader> <C-k> <Plug>(neocomplcache_snippets_force_expand)
++  imap <Leader> <C-l> <Plug>(neocomplcache_snippets_force_jump)
++  smap <Leader> <C-l> <Plug>(neocomplcache_snippets_force_jump)
++
++  " Enable omni completion.
++  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
++  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
++  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
++  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
++  autocmd FileType c setlocal omnifunc=ccomplete#Complete
++  if !exists('g:neocomplcache_omni_patterns')
++    let g:neocomplcache_omni_patterns = {}
++  endif
++  let g:neocomplcache_omni_patterns.erlang = '[a-zA-Z]\|:'
++endif
++
++"----------------------------------------------------------
++" neocomplete
++"----------------------------------------------------------
++if ExistPlugin("neocomplete.vim")
++	" Disable AutoComplPop.
++	let g:acp_enableAtStartup = 0
++	" Use neocomplete.
++	let g:neocomplete#enable_at_startup = 1
++	" Use smartcase.
++	let g:neocomplete#enable_smart_case = 1
++	" Set minimum syntax keyword length.
++	let g:neocomplete#sources#syntax#min_keyword_length = 3
++	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
++
++	" Define dictionary.
++	let g:neocomplete#sources#dictionary#dictionaries = {
++				\ 'default' : '',
++				\ 'vimshell' : $HOME.'/.vimshell_hist',
++				\ 'scheme' : $HOME.'/.gosh_completions'
++				\ }
++
++	" Define keyword.
++	if !exists('g:neocomplete#keyword_patterns')
++		let g:neocomplete#keyword_patterns = {}
++	endif
++	let g:neocomplete#keyword_patterns['default'] = '\h\w*'
++
++	" Plugin key-mappings.
++	inoremap <expr><C-g>     neocomplete#undo_completion()
++	inoremap <expr><C-l>     neocomplete#complete_common_string()
++
++	" Recommended key-mappings.
++	" <CR>: close popup and save indent.
++	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
++	function! s:my_cr_function()
++		return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
++		" For no inserting <CR> key.
++		"return pumvisible() ? "\<C-y>" : "\<CR>"
++	endfunction
++	" <TAB>: completion.
++	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
++	" <C-h>, <BS>: close popup and delete backword char.
++	inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
++	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
++	" Close popup by <Space>.
++	"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
++
++	" AutoComplPop like behavior.
++	"let g:neocomplete#enable_auto_select = 1
++
++	" Shell like behavior(not recommended).
++	"set completeopt+=longest
++	"let g:neocomplete#enable_auto_select = 1
++	"let g:neocomplete#disable_auto_complete = 1
++	"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
++
++	" Enable omni completion.
++	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
++	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
++	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
++	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
++	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
++
++	" Enable heavy omni completion.
++	if !exists('g:neocomplete#sources#omni#input_patterns')
++		let g:neocomplete#sources#omni#input_patterns = {}
++	endif
++	"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
++	"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
++	"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
++
++	" For perlomni.vim setting.
++	" https://github.com/c9s/perlomni.vim
++	let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+ endif
+-let g:neocomplcache_omni_patterns.erlang = '[a-zA-Z]\|:'
++
++"----------------------------------------------------------
++" snipmate
++"----------------------------------------------------------
++let g:snipMate = {}
++let g:snipMate.scope_aliases = {}
++let g:snipMate.scope_aliases['ruby'] = 'ruby,ruby-rails,ruby-1.9'
++
++imap <expr>  <C-\> pumvisible()?  '<esc>a<Plug>snipMateNextOrTrigger':'<Plug>snipMateNextOrTrigger'
++smap <C-\> <Plug>snipMateNextOrTrigger
+ 
+ "----------------------------------------------------------
+ " SuperTab
+ "----------------------------------------------------------
+-" let g:SuperTabDefultCompletionType='context'
+-let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
+-let g:SuperTabRetainCompletionType=2
++if ExistPlugin("SuperTab")
++	let g:SuperTabDefaultCompletionType = '<c-n>'
++	let g:SuperTabContextDefaultCompletionType = "<c-n>"
++endif
+ 
+ "----------------------------------------------------------
+ " ctrlp
+@@ -424,6 +485,20 @@ set wildignore+=*/tmp/*,*.so,*.o,*.a,*.obj,*.swp,*.zip,*.pyc,*.pyo,*.class,.DS_S
+ let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
+ nmap tp :CtrlP<cr>
+ 
++"----------------------------------------------------------
++" syntastic
++"----------------------------------------------------------
++if ExistPlugin("syntastic")
++	set statusline+=%#warningmsg#
++	set statusline+=%{SyntasticStatuslineFlag()}
++	set statusline+=%*
++
++	let g:syntastic_always_populate_loc_list = 1
++	let g:syntastic_auto_loc_list = 0
++	let g:syntastic_check_on_open = 1
++	let g:syntastic_check_on_wq = 0
++endif
++
+ """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+ "键盘命令
+ """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+@@ -701,7 +776,7 @@ augroup end
+ 
+ " 查找 codebase 根目录
+ " 若找到，则设置文件搜索路径和 make 指令
+-functio! FindProjectRootDir()
++function! FindProjectRootDir()
+     let rootfile = findfile("BLADE_ROOT", ".;")
+     " in project root dir
+     if rootfile == "BLADE_ROOT"

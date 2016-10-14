@@ -3,6 +3,21 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 source ~/.vim/bundles.vim
 
+" define functions check plugin exist or not in vundle
+let g:bundle_path = $HOME . "/.vim/bundle"
+function! s:GetPluginPath(name)
+  let l:plugin_path = g:bundle_path . "/" . a:name
+  return l:plugin_path
+endfunction
+
+function! ExistPlugin(name)
+  if isdirectory(s:GetPluginPath(a:name))
+    return 1
+  else
+    return 0
+  endif
+endfunction
+
 " encoding dectection
 set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 
@@ -13,17 +28,16 @@ filetype plugin indent on
 syntax on
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vim基本配置
+" Vim Base Config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"--------
-" Vim UI
-"--------
-" color desert     " 设置背景主题
-color torte     " 设置背景主题
-" color molokai     " 设置背景主题
-"color xemacs " 设置背景主题
-
+" Vim UI vim color config
+" color desert
+color torte
+" color molokai
+" color xemacs
+" color solarized
 " set background=dark
+
 set cul             "高亮光标所在行
 set cuc
 set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示
@@ -46,7 +60,6 @@ nmap tt :%s/\t/  /g<CR>
 
 " editor settings
 set history=10000
-set nocompatible
 set nofoldenable                                                  " disable folding"
 set confirm                                                       " prompt when existing from an unsaved file
 set backspace=indent,eol,start                                    " More powerful backspacing
@@ -104,30 +117,8 @@ let g:html_indent_style1 = "inc"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Rainbow parentheses for Lisp and variants
-let g:rbpt_colorpairs = [
-      \ ['brown',       'RoyalBlue3'],
-      \ ['Darkblue',    'SeaGreen3'],
-      \ ['darkgray',    'DarkOrchid3'],
-      \ ['darkgreen',   'firebrick3'],
-      \ ['darkcyan',    'RoyalBlue3'],
-      \ ['darkred',     'SeaGreen3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['brown',       'firebrick3'],
-      \ ['gray',        'RoyalBlue3'],
-      \ ['black',       'SeaGreen3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['Darkblue',    'firebrick3'],
-      \ ['darkgreen',   'RoyalBlue3'],
-      \ ['darkcyan',    'SeaGreen3'],
-      \ ['darkred',     'DarkOrchid3'],
-      \ ['red',         'firebrick3'],
-      \ ]
-let g:rbpt_max = 16
-autocmd Syntax lisp,scheme,clojure,racket RainbowParenthesesToggle
-
 "----------------------------------------------------------
-" CTags配置
+" CTags
 "----------------------------------------------------------
 let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
 "默认打开Taglist
@@ -138,8 +129,8 @@ let Tlist_Use_Right_Window = 0  " 在右侧显示窗口
 let Tlist_Compart_Format = 1    " 压缩方式
 let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer
 let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags
-"let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树
-"let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树
+let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
 "
 set autochdir
 nmap tl :Tlist<cr>
@@ -216,61 +207,65 @@ endfunction
 
 if filereadable("tags")
   :call AddTagsInCwdPath()
+else
+  :call AddTagsInCwdPath()
 endif
 
 "----------------------------------------------------------
 " Cscope配置
 "----------------------------------------------------------
 if has("cscope")
-  set csprg=/usr/local/bin/cscope
-  set csto=0
-  set cst
-  set nocsverb
-  " add any database in current directory
-  if filereadable("cscope.out")
-    cs add cscope.out
-    " else add database pointed to by environment
-  elseif $CSCOPE_DB != ""
-    cs add $CSCOPE_DB
-  endif
-  set csverb
+	set csprg=/usr/local/bin/cscope
+	set csto=0
+	set cst
+	set nocsverb
+	" add any database in current directory
+	if filereadable("cscope.out")
+		cs add cscope.out
+		" else add database pointed to by environment
+	elseif $CSCOPE_DB != ""
+		cs add $CSCOPE_DB
+	endif
+	set csverb
+
+	"nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<CR><CR>
+	nmap g<C-/> :cs find 0 <C-R>=expand(“<cword>”)<CR><CR>
+
+	nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+	nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+	nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR>$<CR>
+	nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+	nmap <Leader>f :Ack <C-R>=expand("<cword>")<CR><CR>
+
+	map <silent> tc :call MakeCscope()<CR><CR><CR>
+
+	func! MakeCscope()
+		exec "!find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.cpp\" -o -name \"*.cc\" > cscope.files"
+		exec "!cscope -Rbqk -i ./cscope.files"
+	endfunc
 endif
-
-"nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<CR><CR>
-nmap g<C-/> :cs find 0 <C-R>=expand(“<cword>”)<CR><CR>
-
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-nmap <Leader>f :Ack <C-R>=expand("<cword>")<CR><CR>
-
-map <silent> tc :call MakeCscope()<CR><CR><CR>
-
-func! MakeCscope()
-  exec "!find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.cpp\" -o -name \"*.cc\" > cscope.files"
-  exec "!cscope -Rbqk -i ./cscope.files"
-endfunc
 
 "----------------------------------------------------------
 " tabbar
 "----------------------------------------------------------
-let g:Tb_MaxSize = 2
-let g:Tb_TabWrap = 1
+if ExistPlugin("tabbar")
+	let g:Tb_MaxSize = 2
+	let g:Tb_TabWrap = 1
 
-hi Tb_Normal guifg=white ctermfg=white
-hi Tb_Changed guifg=blue ctermfg=white
-hi Tb_VisibleNormal ctermbg=blue ctermfg=white
-hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
+	hi Tb_Normal guifg=white ctermfg=white
+	hi Tb_Changed guifg=blue ctermfg=white
+	hi Tb_VisibleNormal ctermbg=blue ctermfg=white
+	hi Tb_VisibleChanged guifg=white ctermbg=blue ctermfg=white
 
-nmap <silent> <leader>h :Tbbp<cr>
-nmap <silent> <leader>l :Tbbn<cr>
-nmap <silent> <leader>d :Tbbd<cr>
+	nmap <silent> <leader>h :Tbbp<cr>
+	nmap <silent> <leader>l :Tbbn<cr>
+	nmap <silent> <leader>d :Tbbd<cr>
+endif
 
 "----------------------------------------------------------
 " easy-motion
@@ -293,30 +288,6 @@ let g:tagbar_width=30
 "let g:tagbar_autofocus = 1
 let g:tagbar_sort = 0
 let g:tagbar_compact = 1
-" tag for coffee
-if executable('coffeetags')
-  let g:tagbar_type_coffee = {
-        \ 'ctagsbin' : 'coffeetags',
-        \ 'ctagsargs' : '',
-        \ 'kinds' : [
-        \ 'f:functions',
-        \ 'o:object',
-        \ ],
-        \ 'sro' : ".",
-        \ 'kind2scope' : {
-        \ 'f' : 'object',
-        \ 'o' : 'object',
-        \ }
-        \ }
-
-  let g:tagbar_type_markdown = {
-        \ 'ctagstype' : 'markdown',
-        \ 'sort' : 0,
-        \ 'kinds' : [
-        \ 'h:sections'
-        \ ]
-        \ }
-endif
 
 "----------------------------------------------------------
 " Nerd Tree
@@ -335,42 +306,43 @@ func! CallPlugin()
     exec "NERDTree"
     exec "Tagbar"
   elseif &filetype == 'c' || &filetype == 'cpp'
-    exec "NERDTree"
     exec "Tagbar"
   endif
 endfunc
 "----------------------------------------------------------
 " SrcExpl
 "----------------------------------------------------------
-" // The switch of the Source Explorer
-nmap <silent> ts :SrcExplToggle<CR>
-" // Set the height of Source Explorer window
-let g:SrcExpl_winHeight = 8
-" // Set 100 ms for refreshing the Source Explorer
-let g:SrcExpl_refreshTime = 100
-" // Set "Enter" key to jump into the exact definition context
-let g:SrcExpl_jumpKey = "<ENTER>"
-" // Set "Space" key for back from the definition context
-let g:SrcExpl_gobackKey = "<SPACE>"
-" // In order to avoid conflicts, the Source Explorer should know what plugins
-" // except itself are using buffers. And you need add their buffer names into
-" // below listaccording to the command ":buffers!"
-let g:SrcExpl_pluginList = [
-      \ "__Tagbar__",
-      \ "NERD_tree_1",
-      \ "[BufExplorer]",
-      \ "Source_Explorer"
-      \ ]
+if ExistPlugin("SrcExpl")
+	" // The switch of the Source Explorer
+	nmap <silent> ts :SrcExplToggle<CR>
+	" // Set the height of Source Explorer window
+	let g:SrcExpl_winHeight = 8
+	" // Set 100 ms for refreshing the Source Explorer
+	let g:SrcExpl_refreshTime = 100
+	" // Set "Enter" key to jump into the exact definition context
+	let g:SrcExpl_jumpKey = "<ENTER>"
+	" // Set "Space" key for back from the definition context
+	let g:SrcExpl_gobackKey = "<SPACE>"
+	" // In order to avoid conflicts, the Source Explorer should know what plugins
+	" // except itself are using buffers. And you need add their buffer names into
+	" // below listaccording to the command ":buffers!"
+	let g:SrcExpl_pluginList = [
+				\ "__Tagbar__",
+				\ "NERD_tree_1",
+				\ "[BufExplorer]",
+				\ "Source_Explorer"
+				\ ]
 
-" // Enable/Disable the local definition searching, and note that this is not
-" // guaranteed to work, the Source Explorer doesn't check the syntax for now.
-" // It only searches for a match with the keyword according to command 'gd'
-let g:SrcExpl_searchLocalDef = 1
-" // Do not let the Source Explorer update the tags file when opening
-let g:SrcExpl_isUpdateTags = 0
-" // Use 'Exuberant Ctags' with '--sort=foldcase -R .' or '-L cscope.files' to
-" " // create/update the tags file
-let g:SrcExpl_updateTagsCmd = "ctags --sort=foldcase -R ."
+	" // Enable/Disable the local definition searching, and note that this is not
+	" // guaranteed to work, the Source Explorer doesn't check the syntax for now.
+	" // It only searches for a match with the keyword according to command 'gd'
+	let g:SrcExpl_searchLocalDef = 1
+	" // Do not let the Source Explorer update the tags file when opening
+	let g:SrcExpl_isUpdateTags = 0
+	" // Use 'Exuberant Ctags' with '--sort=foldcase -R .' or '-L cscope.files' to
+	" " // create/update the tags file
+	let g:SrcExpl_updateTagsCmd = "ctags --sort=foldcase -R ."
+endif
 
 "----------------------------------------------------------
 " ZenCoding
@@ -385,37 +357,126 @@ let g:user_emmet_expandabbr_key='<C-j>'
 "----------------------------------------------------------
 " NeoComplCache
 "----------------------------------------------------------
-let g:neocomplcache_enable_at_startup=1
-let g:neoComplcache_disableautocomplete=1
-"let g:neocomplcache_enable_underbar_completion = 1
-"let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_smart_case=1
-let g:neocomplcache_min_syntax_length = 3
-let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
-set completeopt-=preview
+if ExistPlugin("neocomplcache")
+  let g:neocomplcache_enable_at_startup=1
+  let g:neoComplcache_disableautocomplete=1
+  "let g:neocomplcache_enable_underbar_completion = 1
+  "let g:neocomplcache_enable_camel_case_completion = 1
+  let g:neocomplcache_enable_smart_case=1
+  let g:neocomplcache_min_syntax_length = 3
+  let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+  set completeopt-=preview
 
-imap <C-k> <Plug>(neocomplcache_snippets_force_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_force_expand)
-imap <C-l> <Plug>(neocomplcache_snippets_force_jump)
-smap <C-l> <Plug>(neocomplcache_snippets_force_jump)
+  imap <Leader> <C-k> <Plug>(neocomplcache_snippets_force_expand)
+  smap <Leader> <C-k> <Plug>(neocomplcache_snippets_force_expand)
+  imap <Leader> <C-l> <Plug>(neocomplcache_snippets_force_jump)
+  smap <Leader> <C-l> <Plug>(neocomplcache_snippets_force_jump)
 
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType c setlocal omnifunc=ccomplete#Complete
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
+  " Enable omni completion.
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType c setlocal omnifunc=ccomplete#Complete
+  if !exists('g:neocomplcache_omni_patterns')
+    let g:neocomplcache_omni_patterns = {}
+  endif
+  let g:neocomplcache_omni_patterns.erlang = '[a-zA-Z]\|:'
 endif
-let g:neocomplcache_omni_patterns.erlang = '[a-zA-Z]\|:'
+
+"----------------------------------------------------------
+" neocomplete
+"----------------------------------------------------------
+if ExistPlugin("neocomplete.vim")
+	" Disable AutoComplPop.
+	let g:acp_enableAtStartup = 0
+	" Use neocomplete.
+	let g:neocomplete#enable_at_startup = 1
+	" Use smartcase.
+	let g:neocomplete#enable_smart_case = 1
+	" Set minimum syntax keyword length.
+	let g:neocomplete#sources#syntax#min_keyword_length = 3
+	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+	" Define dictionary.
+	let g:neocomplete#sources#dictionary#dictionaries = {
+				\ 'default' : '',
+				\ 'vimshell' : $HOME.'/.vimshell_hist',
+				\ 'scheme' : $HOME.'/.gosh_completions'
+				\ }
+
+	" Define keyword.
+	if !exists('g:neocomplete#keyword_patterns')
+		let g:neocomplete#keyword_patterns = {}
+	endif
+	let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+	" Plugin key-mappings.
+	inoremap <expr><C-g>     neocomplete#undo_completion()
+	inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+	" Recommended key-mappings.
+	" <CR>: close popup and save indent.
+	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+	function! s:my_cr_function()
+		return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+		" For no inserting <CR> key.
+		"return pumvisible() ? "\<C-y>" : "\<CR>"
+	endfunction
+	" <TAB>: completion.
+	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+	" <C-h>, <BS>: close popup and delete backword char.
+	inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+	" Close popup by <Space>.
+	"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+	" AutoComplPop like behavior.
+	"let g:neocomplete#enable_auto_select = 1
+
+	" Shell like behavior(not recommended).
+	"set completeopt+=longest
+	"let g:neocomplete#enable_auto_select = 1
+	"let g:neocomplete#disable_auto_complete = 1
+	"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+	" Enable omni completion.
+	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+	" Enable heavy omni completion.
+	if !exists('g:neocomplete#sources#omni#input_patterns')
+		let g:neocomplete#sources#omni#input_patterns = {}
+	endif
+	"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+	"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+	"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+	" For perlomni.vim setting.
+	" https://github.com/c9s/perlomni.vim
+	let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+endif
+
+"----------------------------------------------------------
+" snipmate
+"----------------------------------------------------------
+let g:snipMate = {}
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['ruby'] = 'ruby,ruby-rails,ruby-1.9'
+
+imap <expr>  <C-\> pumvisible()?  '<esc>a<Plug>snipMateNextOrTrigger':'<Plug>snipMateNextOrTrigger'
+smap <C-\> <Plug>snipMateNextOrTrigger
 
 "----------------------------------------------------------
 " SuperTab
 "----------------------------------------------------------
-" let g:SuperTabDefultCompletionType='context'
-let g:SuperTabDefaultCompletionType = '<C-X><C-U>'
-let g:SuperTabRetainCompletionType=2
+if ExistPlugin("SuperTab")
+	let g:SuperTabDefaultCompletionType = '<c-n>'
+	let g:SuperTabContextDefaultCompletionType = "<c-n>"
+endif
 
 "----------------------------------------------------------
 " ctrlp
@@ -423,6 +484,20 @@ let g:SuperTabRetainCompletionType=2
 set wildignore+=*/tmp/*,*.so,*.o,*.a,*.obj,*.swp,*.zip,*.pyc,*.pyo,*.class,.DS_Store  " MacOSX/Linux
 let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
 nmap tp :CtrlP<cr>
+
+"----------------------------------------------------------
+" syntastic
+"----------------------------------------------------------
+if ExistPlugin("syntastic")
+	set statusline+=%#warningmsg#
+	set statusline+=%{SyntasticStatuslineFlag()}
+	set statusline+=%*
+
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_auto_loc_list = 0
+	let g:syntastic_check_on_open = 1
+	let g:syntastic_check_on_wq = 0
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "键盘命令
@@ -701,7 +776,7 @@ augroup end
 
 " 查找 codebase 根目录
 " 若找到，则设置文件搜索路径和 make 指令
-functio! FindProjectRootDir()
+function! FindProjectRootDir()
     let rootfile = findfile("BLADE_ROOT", ".;")
     " in project root dir
     if rootfile == "BLADE_ROOT"
