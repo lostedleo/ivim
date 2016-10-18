@@ -13,11 +13,11 @@ Bundle 'gmarik/vundle'
 "------------------
 " Bundle 'ajh17/VimCompletesMe'
 " Bundle 'Shougo/neocomplete.vim'
-" Bundle 'Valloric/YouCompleteMe'
-Bundle 'Shougo/neocomplcache'
+Bundle 'Valloric/YouCompleteMe'
+" Bundle 'Shougo/neocomplcache'
 " Bundle 'mattn/emmet-vim'
 Bundle 'Raimondi/delimitMate'
-Bundle 'ervandew/supertab'
+" Bundle 'ervandew/supertab'
 
 "------ snipmate dependencies -------
 " snippets
@@ -55,7 +55,7 @@ Bundle 'mileszs/ack.vim'
 Bundle 'kien/ctrlp.vim'
 
 " git plugin
-" Bundle 'tpope/vim-fugitive'    
+" Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-powerline'
 "Bundle 'scrooloose/syntastic'
 Bundle 'bronson/vim-trailing-whitespace'
