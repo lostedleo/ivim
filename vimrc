@@ -303,15 +303,10 @@ let NERDTreeWinPos = "right"
 
 autocmd vimenter * call CallPlugin()
 " Close vim when only Nerdtree
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 func! CallPlugin()
-  if !argc()
-    exec "NERDTree"
-    exec "Tagbar"
-  elseif &filetype == 'c' || &filetype == 'cpp'
-    exec "Tagbar"
-  endif
+  exec "Tagbar"
 endfunc
 
 "--------------------------------------------
