@@ -5,10 +5,10 @@
 '''
 import os
 for i in os.listdir("./"):
-    if i.endswith(".vim"):
-        han = open(i)
-        data = han.read().replace("\r\n", "\n")
-        han.close()
-        han = open(i, 'w')
-        han.write(data)
-        han.close()
+  if i.endswith(".vim"):
+    han = open(i)
+    data = han.read().replace("\r\n", "\n")
+    han.close()
+    han = open(i, 'w')
+    han.write(data)
+    han.close()

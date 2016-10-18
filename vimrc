@@ -22,12 +22,12 @@ endfunction
 " Vim Base Config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim color config
-" color torte
+color torte
 " color desert
-color molokai
+" color molokai
 " color xemacs
 " color solarized
-" set background&
+" set background=light
 " highlight clear
 " let g:solarized_termcolors=256
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
