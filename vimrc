@@ -371,11 +371,11 @@ if ExistPlugin("SrcExpl")
   " except itself are using buffers. And you need add their buffer names into
   " below listaccording to the command ":buffers!"
   let g:SrcExpl_pluginList = [
-        \ "__Tagbar__",
-        \ "NERD_tree_1",
-        \ "[BufExplorer]",
-        \ "Source_Explorer"
-        \ ]
+    \ "__Tagbar__",
+    \ "NERD_tree_1",
+    \ "[BufExplorer]",
+    \ "Source_Explorer"
+    \ ]
 
   " Enable/Disable the local definition searching, and note that this is not
   " guaranteed to work, the Source Explorer doesn't check the syntax for now.
