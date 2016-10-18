@@ -106,11 +106,33 @@ set report=0                  " show modifed line
 
 " Replace the tab as spaces
 nmap tt :%s/\t/  /g<CR>
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
 " easier navigation between split windows
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+
+" w!! to sudo & write a file
+cmap w!! %!sudo tee >/dev/null %
+
+" sublime key bindings
+nmap <D-]> >>
+nmap <D-[> <<
+vmap <D-[> <gv
+vmap <D-]> >gv
+
+" eggcache vim
+nnoremap ; :
+:command W w
+:command WQ wq
+:command Wq wq
+:command Q q
+:command Qa qa
+:command QA qa
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FileType
@@ -384,7 +406,7 @@ if ExistPlugin("YouCompleteMe")
 
   let g:ycm_global_ycm_extra_conf = ''
   let g:ycm_confirm_extra_conf = 0
-  "let g:ycm_key_invoke_completion='<C-;>'
+  let g:ycm_key_invoke_completion='<C-;>'
   set completeopt=longest,menu
   autocmd InsertLeave * if pumvisible() == 0|pclose|endif
   inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
@@ -394,8 +416,7 @@ if ExistPlugin("YouCompleteMe")
   let g:ycm_complete_in_comments = 0
   let g:ycm_complete_in_strings = 0
   let g:ycm_min_num_of_chars_for_completion = 2
-  let g:ycm_key_list_select_completion = ['<TAB>','<C-j>']
-  let g:ycm_key_list_previous_completion = ['<C-k>']
+  let g:ycm_key_list_select_completion = ['<TAB>','<Down>']
 endif
 
 "--------------------------------------------
@@ -672,27 +693,6 @@ autocmd BufReadPost *
   \   endif |
   \ endif
 
-" w!! to sudo & write a file
-cmap w!! %!sudo tee >/dev/null %
-
-" Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
-" sublime key bindings
-nmap <D-]> >>
-nmap <D-[> <<
-vmap <D-[> <gv
-vmap <D-]> >gv
-
-" eggcache vim
-nnoremap ; :
-:command W w
-:command WQ wq
-:command Wq wq
-:command Q q
-:command Qa qa
-:command QA qa
 
 " for macvim
 if has("gui_running")
