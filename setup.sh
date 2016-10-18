@@ -34,7 +34,6 @@ if which apt-get >/dev/null 2>&1; then
 elif which yum >/dev/null 2>&1; then
   sudo yum install -y ctags ack cscope
 elif which brew >/dev/null 2>&1;then
-  echo "You are using HomeBrew tool"
   brew install ctags ack cscope
 fi
 
