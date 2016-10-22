@@ -285,9 +285,9 @@ run bundle/vimgdb-for-vim7.3/vimgdb_runtime/macros/gdb_mappings.vim
 nmap <silent> tb :bel 20vsplit gdb-variables<cr>
 
 "--------------------------------------------
-" Tagbar
+" tagbar
 "--------------------------------------------
-if ExistPlugin("Tagbar")
+if ExistPlugin("tagbar")
   let g:tagbar_left=1
   "let g:tagbar_right=1
   let g:tagbar_width=30
