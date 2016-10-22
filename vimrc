@@ -1,8 +1,6 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vundle Plugins
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-source ~/.vim/bundles.vim
-
 " Define functions check plugin exist or not in vundle
 let g:bundle_path = $HOME . "/.vim/bundle"
 function! s:GetPluginPath(name)
@@ -17,6 +15,10 @@ function! ExistPlugin(name)
     return 0
   endif
 endfunction
+
+if isdirectory(g:bundle_path)
+  source ~/.vim/bundles.vim
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim Base Config
@@ -104,10 +106,10 @@ set selectmode=mouse,key
 "set fillchars=vert:\ ,stl:\ ,stlnc:\
 
 " Replace the tab as spaces
-nmap tt :%s/\t/  /g<CR>
+nmap tt :%s/\t/  /g<cr>
 " Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+nmap <silent> <leader>ev :e $MYVIMRC<cr>
+nmap <silent> <leader>sv :so $MYVIMRC<cr>
 
 " easier navigation between split windows
 nnoremap <c-j> <c-w>j
@@ -120,12 +122,8 @@ cmap w!! %!sudo tee >/dev/null %
 
 " eggcache vim
 nnoremap ; :
+nnoremap gs :shell<cr>
 :command W w
-:command WQ wq
-:command Wq wq
-:command Q q
-:command Qa qa
-:command QA qa
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
@@ -133,86 +131,88 @@ nnoremap ; :
 "--------------------------------------------
 " CTags
 "--------------------------------------------
-let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
-let Tlist_Auto_Open=0
-let Tlist_Show_One_File = 1                    " only show current file's tags
-let Tlist_Sort_Type = " name"                  " sort by name
-let Tlist_Use_Right_Window = 0                 " show tags in right window
-let Tlist_Compart_Format = 1                   " use compress
-let Tlist_Exist_OnlyWindow = 1
-let Tlist_File_Fold_Auto_Close = 0             " not close other file's tags
-let Tlist_Enable_Fold_Column = 0               " not show fold tree
+if has('ctags')
+  let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
+  let Tlist_Auto_Open=0
+  let Tlist_Show_One_File = 1                    " only show current file's tags
+  let Tlist_Sort_Type = " name"                  " sort by name
+  let Tlist_Use_Right_Window = 0                 " show tags in right window
+  let Tlist_Compart_Format = 1                   " use compress
+  let Tlist_Exist_OnlyWindow = 1
+  let Tlist_File_Fold_Auto_Close = 0             " not close other file's tags
+  let Tlist_Enable_Fold_Column = 0               " not show fold tree
 
-set tags=
-set autochdir
-nmap tl :Tlist<cr>
-map tu :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<CR><CR>
+  set tags=
+  set autochdir
+  nmap tl :Tlist<cr>
+  map tu :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<cr><cr>
 
-" Auto load tags in current and parent's tags
-function! s:CheckAndAddTagFile(path)
-  if stridx(a:path, '/') == (strlen(a:path) - 1)
-    let l:tags = a:path . 'tags'
-  else
-    let l:tags = a:path . '/tags'
-  endif
-
-  if stridx(&tags, l:tags) != -1
-    echo l:tags "already added"
-    return
-  endif
-
-  if !filereadable(l:tags)
-    "echo l:tags "not readable"
-    return
-  endif
-
-  let &tags =  len(&tags) == 0 ? l:tags : &tags . ',' . l:tags
-  "echo l:tags "added"
-
-  unlet! l:tags
-endfunction
-
-function! s:StrEndWith(str, pattern)
-  if strridx(a:str, a:pattern) == strlen(a:str) - strlen(a:pattern)
-    return 1
-  else
-    return 0
-  endif
-endfunction
-
-function! s:SplitPath(path)
-  let l:start = 0
-  let l:list = []
-
-  while 1 == 1
-    let l:idx = stridx(a:path, '/', l:start)
-    let l:start = l:idx + 1
-
-    if l:idx == -1
-      break
+  " Auto load tags in current and parent's tags
+  function! s:CheckAndAddTagFile(path)
+    if stridx(a:path, '/') == (strlen(a:path) - 1)
+      let l:tags = a:path . 'tags'
+    else
+      let l:tags = a:path . '/tags'
     endif
 
-    let l:part = a:path[0:(l:idx > 0 ? l:idx - 1 : l:idx)]
-    call add(l:list, l:part)
-  endwhile
+    if stridx(&tags, l:tags) != -1
+      echo l:tags "already added"
+      return
+    endif
 
-  if !s:StrEndWith(a:path, '/')
-    call add(l:list, a:path)
-  endif
+    if !filereadable(l:tags)
+      "echo l:tags "not readable"
+      return
+    endif
 
-  return l:list
-endfunction
+    let &tags =  len(&tags) == 0 ? l:tags : &tags . ',' . l:tags
+    "echo l:tags "added"
 
-function! AddTagsInCwdPath()
-  let l:cwd = tr(expand('%:p:h'), '\', '/')
+    unlet! l:tags
+  endfunction
 
-  let l:pathes = s:SplitPath(l:cwd)
+  function! s:StrEndWith(str, pattern)
+    if strridx(a:str, a:pattern) == strlen(a:str) - strlen(a:pattern)
+      return 1
+    else
+      return 0
+    endif
+  endfunction
 
-  for p in l:pathes
-    call s:CheckAndAddTagFile(p)
-  endfor
+  function! s:SplitPath(path)
+    let l:start = 0
+    let l:list = []
 
-endfunction
+    while 1 == 1
+      let l:idx = stridx(a:path, '/', l:start)
+      let l:start = l:idx + 1
+
+      if l:idx == -1
+        break
+      endif
+
+      let l:part = a:path[0:(l:idx > 0 ? l:idx - 1 : l:idx)]
+      call add(l:list, l:part)
+    endwhile
+
+    if !s:StrEndWith(a:path, '/')
+      call add(l:list, a:path)
+    endif
+
+    return l:list
+  endfunction
+
+  function! AddTagsInCwdPath()
+    let l:cwd = tr(expand('%:p:h'), '\', '/')
+
+    let l:pathes = s:SplitPath(l:cwd)
+
+    for p in l:pathes
+      call s:CheckAndAddTagFile(p)
+    endfor
+
+  endfunction
+endif
 
 " Auto load tags
 "call AddTagsInCwdPath()
@@ -233,21 +233,21 @@ if has("cscope")
   endif
   set csverb
 
-  "nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<CR><CR>
-  nmap g<C-/> :cs find 0 <C-R>=expand(“<cword>”)<CR><CR>
+  "nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<cr><cr>
+  nmap g<C-/> :cs find 0 <C-R>=expand(“<cword>”)<cr><cr>
 
-  nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-  nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-  nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-  nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-  nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-  nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-  nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<CR>$<CR>
-  nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+  nmap <C-@>s :cs find s <C-R>=expand("<cword>")<cr><cr>
+  nmap <C-@>g :cs find g <C-R>=expand("<cword>")<cr><cr>
+  nmap <C-@>c :cs find c <C-R>=expand("<cword>")<cr><cr>
+  nmap <C-@>t :cs find t <C-R>=expand("<cword>")<cr><cr>
+  nmap <C-@>e :cs find e <C-R>=expand("<cword>")<cr><cr>
+  nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<cr><cr>
+  nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<cr>$<cr>
+  nmap <C-@>d :cs find d <C-R>=expand("<cword>")<cr><cr>
 
-  nmap <Leader>f :Ack <C-R>=expand("<cword>")<CR><CR>
+  nmap <Leader>f :Ack <C-R>=expand("<cword>")<cr><cr>
 
-  map <silent> tc :call MakeCscope()<CR><CR><CR>
+  map <silent> tc :call MakeCscope()<cr><cr><cr>
 
   func! MakeCscope()
     exec "!find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.cpp\" -o -name \"*.cc\" > cscope.files"
@@ -287,12 +287,19 @@ nmap <silent> tb :bel 20vsplit gdb-variables<cr>
 "--------------------------------------------
 " Tagbar
 "--------------------------------------------
-let g:tagbar_left=1
-"let g:tagbar_right=1
-let g:tagbar_width=30
-"let g:tagbar_autofocus = 1
-let g:tagbar_sort = 0
-let g:tagbar_compact = 1
+if ExistPlugin("Tagbar")
+  let g:tagbar_left=1
+  "let g:tagbar_right=1
+  let g:tagbar_width=30
+  "let g:tagbar_autofocus = 1
+  let g:tagbar_sort = 0
+  let g:tagbar_compact = 1
+
+  autocmd vimenter * call CallPlugin()
+  func! CallPlugin()
+    exec "Tagbar"
+  endfunc
+endif
 
 "--------------------------------------------
 " Nerd Tree
@@ -301,20 +308,15 @@ let NERDTreeShowBookmarks=1
 let g:NERDTreeWinSize=30
 let NERDTreeWinPos = "right"
 
-autocmd vimenter * call CallPlugin()
 " Close vim when only Nerdtree
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-func! CallPlugin()
-  exec "Tagbar"
-endfunc
 
 "--------------------------------------------
 " SrcExpl
 "--------------------------------------------
 if ExistPlugin("SrcExpl")
   " The switch of the Source Explorer
-  nmap <silent> ts :SrcExplToggle<CR>
+  nmap <silent> ts :SrcExplToggle<cr>
   " Set the height of Source Explorer window
   let g:SrcExpl_winHeight = 8
   " Set 100 ms for refreshing the Source Explorer
@@ -358,14 +360,14 @@ let g:user_emmet_expandabbr_key='<C-j>'
 " YouCompleteMe
 "--------------------------------------------
 if ExistPlugin("YouCompleteMe")
-  nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+  nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>
 
   let g:ycm_global_ycm_extra_conf = ''
   let g:ycm_confirm_extra_conf = 0
   let g:ycm_key_invoke_completion='<C-;>'
   set completeopt=longest,menu
   autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-  inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
   let g:ycm_enable_diagnostic_signs = 0
   let g:ycm_enable_diagnostic_highlighting = 1
   let g:ycm_collect_identifiers_from_comments_and_strings = 0
@@ -452,19 +454,19 @@ endif
 "--------------------------------------------
 " Keybindings for plugin toggle
 nmap <silent> <F9> <ESC>:Tlist<RETURN>
-nnoremap <F2> :set invpaste paste?<CR>
+nnoremap <F2> :set invpaste paste?<cr>
 set pastetoggle=<F2>
 nmap tg :TagbarToggle<cr>
-nmap th :BufExplorer<CR>
+nmap th :BufExplorer<cr>
 nmap <F3> :NERDTreeToggle<cr>
-imap <F3> <ESC> :NERDTreeToggle<CR>
+imap <F3> <ESC> :NERDTreeToggle<cr>
 nmap <F4> :IndentGuidesToggle<cr>
 nmap <F6> :GundoToggle<cr>
 
 " Delete blank line
-nnoremap <C-F2> :g/^\s*$/d<CR>
+nnoremap <C-F2> :g/^\s*$/d<cr>
 "nmap th \be
-:autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
+:autocmd BufRead,BufNewFile *.dot map <F5> :w<cr>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <cr><cr> && exec "redr!"
 
 nmap  <D-/> :
 nnoremap <leader>a :Ack
@@ -486,7 +488,7 @@ vmap <C-c> "+y
 nnoremap <C-n> :cn<cr>
 
 " F5 for Complite
-nmap <C-F5> :call CompileRunGcc()<CR>
+nmap <C-F5> :call CompileRunGcc()<cr>
 func! CompileRunGcc()
   exec "w"
   if &filetype == 'c'
@@ -513,7 +515,7 @@ func! CompileRunGcc()
   endif
 endfunc
 
-map <F8> :call Rungdb()<CR>
+map <F8> :call Rungdb()<cr>
 func! Rungdb()
   exec "w"
   exec "!g++ % -g -o %<"
@@ -521,7 +523,7 @@ func! Rungdb()
 endfunc
 
 " Code format
-map <C-F6> :call FormartSrc()<CR><CR>
+map <C-F6> :call FormartSrc()<cr><cr>
 func FormartSrc()
   exec "w"
   if &filetype == 'c'
