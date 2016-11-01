@@ -131,7 +131,7 @@ nnoremap gs :shell<cr>
 "--------------------------------------------
 " CTags
 "--------------------------------------------
-if has('ctags')
+if ExistPlugin("taglist")
   let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
   let Tlist_Auto_Open=0
   let Tlist_Show_One_File = 1                    " only show current file's tags
