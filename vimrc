@@ -66,7 +66,7 @@ set nofoldenable                " disable folding"
 set confirm                     " prompt when existing from an unsaved file
 set backspace=indent,eol,start  " More powerful backspacing
 set t_Co=256                    " Explicitly tell vim that the terminal has 256 colors
-set mouse=v                     " use mouse in all modes
+set mouse=a                     " use mouse in all modes
 set report=0                    " always report number of lines changed
 set nowrap                      " dont wrap lines
 set scrolloff=5                 " 5 lines above/below cursor when scrolling
@@ -121,6 +121,7 @@ nnoremap <c-l> <c-w>l
 cmap w!! %!sudo tee >/dev/null %
 
 " eggcache vim
+inoremap jj <esc>
 nnoremap ; :
 nnoremap gs :shell<cr>
 :command W w
@@ -604,8 +605,8 @@ func SetTitle()
     call append(line(".")+7, "")
   endif
   if expand("%:e") == 'h'
-    call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
-    call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
+    call append(line(".")+6, "#ifndef ".toupper(expand("%:r"))."_H_")
+    call append(line(".")+7, "#define ".toupper(expand("%:r"))."_H_")
     call append(line(".")+8, "#endif")
   endif
   if &filetype == 'java'

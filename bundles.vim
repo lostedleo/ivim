@@ -17,7 +17,7 @@ Bundle 'Valloric/YouCompleteMe'
 " Bundle 'Shougo/neocomplcache'
 " Bundle 'mattn/emmet-vim'
 Bundle 'Raimondi/delimitMate'
-" Bundle 'ervandew/supertab'
+Bundle 'ervandew/supertab'
 
 "------ snipmate dependencies -------
 " snippets
