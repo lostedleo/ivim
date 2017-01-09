@@ -434,6 +434,14 @@ let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
 nmap tp :CtrlP<cr>
 
 "--------------------------------------------
+" Dart
+"--------------------------------------------
+if has('vim_starting')
+  set nocompatible
+  set runtimepath+=~/.vim/bundle/dart-vim-plugin
+endif
+
+"--------------------------------------------
 " syntastic
 "--------------------------------------------
 if ExistPlugin("syntastic")

@@ -53,6 +53,7 @@ Bundle 'majutsushi/tagbar'
 "Bundle 'wesleyche/SrcExpl'
 Bundle 'mileszs/ack.vim'
 Bundle 'kien/ctrlp.vim'
+Bundle 'dart-lang/dart-vim-plugin'
 
 " git plugin
 " Bundle 'tpope/vim-fugitive'

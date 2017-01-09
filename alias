@@ -20,7 +20,8 @@ alias screennw='screen -S'
 
 #git alias
 alias gitad='git add'
-alias gitco='git commit -m'
+alias gitcl='git clone'
+alias gitco='git commit'
 alias gitpl='git pull'
 alias gitdf='git diff'
 alias gitps='git push'
@@ -28,7 +29,7 @@ alias gitck='git checkout'
 
 #svn alias
 alias svnu='svn up'
-alias svnco='svn commit -m'
+alias svnco='svn commit'
 alias svnck='svn checkout'
 alias svncl='svn cleanup'
 alias svndf='svn diff'
