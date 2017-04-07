@@ -13,7 +13,7 @@ Bundle 'gmarik/vundle'
 "------------------
 " Bundle 'ajh17/VimCompletesMe'
 " Bundle 'Shougo/neocomplete.vim'
-Bundle 'Valloric/YouCompleteMe'
+“ Bundle 'Valloric/YouCompleteMe'
 " Bundle 'Shougo/neocomplcache'
 " Bundle 'mattn/emmet-vim'
 Bundle 'Raimondi/delimitMate'
