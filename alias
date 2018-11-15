@@ -26,6 +26,7 @@ alias gitpl='git pull'
 alias gitdf='git diff'
 alias gitps='git push'
 alias gitck='git checkout'
+alias glog='git log --graph --pretty=format:'\''%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --abbrev-commit'
 
 #svn alias
 alias svnu='svn up'

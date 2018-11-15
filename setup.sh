@@ -76,5 +76,6 @@ if [ ! -d ~/.vim/bundle ];then
   echo "please wating..." >> $tmp_file
   vim $tmp_file -c "BundleInstall" -c "q" -c "q"
   rm $tmp_file
+  ./bundle/fzf/install
   echo "install completed!"
 fi
