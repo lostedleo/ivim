@@ -66,7 +66,7 @@ set nofoldenable                " disable folding"
 set confirm                     " prompt when existing from an unsaved file
 set backspace=indent,eol,start  " More powerful backspacing
 set t_Co=256                    " Explicitly tell vim that the terminal has 256 colors
-set mouse=a                     " use mouse in all modes
+set mouse=i                     " use mouse in all modes
 set report=0                    " always report number of lines changed
 set nowrap                      " dont wrap lines
 set scrolloff=5                 " 5 lines above/below cursor when scrolling
@@ -246,7 +246,6 @@ if has("cscope")
   nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<cr>$<cr>
   nmap <C-@>d :cs find d <C-R>=expand("<cword>")<cr><cr>
 
-  nmap <Leader>f :Ack <C-R>=expand("<cword>")<cr><cr>
 
   map <silent> tc :call MakeCscope()<cr><cr><cr>
 
@@ -255,6 +254,8 @@ if has("cscope")
     exec "!cscope -Rbqk -i ./cscope.files"
   endfunc
 endif
+
+nmap <Leader>f :Ack <C-R>=expand("<cword>")<cr><cr>
 
 "--------------------------------------------
 " tabbar
@@ -572,6 +573,9 @@ autocmd BufReadPost *
   \     exe "normal g'\"" |
   \   endif |
   \ endif
+
+" for golang
+let g:go_fmt_command = "goimports"
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " New file's Title
