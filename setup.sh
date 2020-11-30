@@ -59,6 +59,13 @@ fi
 #set shell config
 set_shell
 
+#install ohmyzsh
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+#install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
 #set vim config
 ln -sf ~/.vim/vimrc ~/.vimrc
 ln -sf ~/.vim/screenrc ~/.screenrc
