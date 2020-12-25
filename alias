@@ -12,6 +12,7 @@ alias lsf='ls | sed "s:^:`pwd`/: "'
 #tmux alias
 alias tmuxat='tmux at -t'
 alias tmuxnw='tmux new -s'
+alias tmuxls='tmux list-session'
 alias tmuxkl='tmux kill-session -t'
 
 #screenrc alias
@@ -20,6 +21,7 @@ alias screennw='screen -S'
 
 #git alias
 alias gitad='git add'
+alias gitst='git status .'
 alias gitcl='git clone'
 alias gitco='git commit'
 alias gitpl='git pull'
