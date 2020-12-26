@@ -87,7 +87,7 @@ set textwidth=120
 set smarttab
 set expandtab                   " expand tab to space
 " set relativenumber
-"set matchpairs+=<:>            " specially for html
+" set matchpairs+=<:>            " specially for html
 
 set noeb                        " remove input error prompt sound
 set autoread                    " auto load file when modified
@@ -130,133 +130,30 @@ nnoremap gs :shell<cr>
 " Plugin settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "--------------------------------------------
-" CTags
+" nerdcommenter
 "--------------------------------------------
-if ExistPlugin("taglist")
-  let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
-  let Tlist_Auto_Open=0
-  let Tlist_Show_One_File = 1                    " only show current file's tags
-  let Tlist_Sort_Type = " name"                  " sort by name
-  let Tlist_Use_Right_Window = 0                 " show tags in right window
-  let Tlist_Compart_Format = 1                   " use compress
-  let Tlist_Exist_OnlyWindow = 1
-  let Tlist_File_Fold_Auto_Close = 0             " not close other file's tags
-  let Tlist_Enable_Fold_Column = 0               " not show fold tree
-
-  set tags=
-  set autochdir
-  nmap tl :Tlist<cr>
-  map tu :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q<cr><cr>
-
-  " Auto load tags in current and parent's tags
-  function! s:CheckAndAddTagFile(path)
-    if stridx(a:path, '/') == (strlen(a:path) - 1)
-      let l:tags = a:path . 'tags'
-    else
-      let l:tags = a:path . '/tags'
-    endif
-
-    if stridx(&tags, l:tags) != -1
-      echo l:tags "already added"
-      return
-    endif
-
-    if !filereadable(l:tags)
-      "echo l:tags "not readable"
-      return
-    endif
-
-    let &tags =  len(&tags) == 0 ? l:tags : &tags . ',' . l:tags
-    "echo l:tags "added"
-
-    unlet! l:tags
-  endfunction
-
-  function! s:StrEndWith(str, pattern)
-    if strridx(a:str, a:pattern) == strlen(a:str) - strlen(a:pattern)
-      return 1
-    else
-      return 0
-    endif
-  endfunction
-
-  function! s:SplitPath(path)
-    let l:start = 0
-    let l:list = []
-
-    while 1 == 1
-      let l:idx = stridx(a:path, '/', l:start)
-      let l:start = l:idx + 1
-
-      if l:idx == -1
-        break
-      endif
-
-      let l:part = a:path[0:(l:idx > 0 ? l:idx - 1 : l:idx)]
-      call add(l:list, l:part)
-    endwhile
-
-    if !s:StrEndWith(a:path, '/')
-      call add(l:list, a:path)
-    endif
-
-    return l:list
-  endfunction
-
-  function! AddTagsInCwdPath()
-    let l:cwd = tr(expand('%:p:h'), '\', '/')
-
-    let l:pathes = s:SplitPath(l:cwd)
-
-    for p in l:pathes
-      call s:CheckAndAddTagFile(p)
-    endfor
-
-  endfunction
-endif
-
-" Auto load tags
-"call AddTagsInCwdPath()
-"--------------------------------------------
-" Cscope
-"--------------------------------------------
-if has("cscope")
-  set csprg=/usr/local/bin/cscope
-  set csto=0
-  set cst
-  set nocsverb
-  " add any database in current directory
-  if filereadable("cscope.out")
-    cs add cscope.out
-    " else add database pointed to by environment
-  elseif $CSCOPE_DB != ""
-    cs add $CSCOPE_DB
-  endif
-  set csverb
-
-  "nmap g<C-]> :cs find 3 <C-R>=expand(“<cword>”)<cr><cr>
-  nmap g<C-/> :cs find 0 <C-R>=expand(“<cword>”)<cr><cr>
-
-  nmap <C-@>s :cs find s <C-R>=expand("<cword>")<cr><cr>
-  nmap <C-@>g :cs find g <C-R>=expand("<cword>")<cr><cr>
-  nmap <C-@>c :cs find c <C-R>=expand("<cword>")<cr><cr>
-  nmap <C-@>t :cs find t <C-R>=expand("<cword>")<cr><cr>
-  nmap <C-@>e :cs find e <C-R>=expand("<cword>")<cr><cr>
-  nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<cr><cr>
-  nmap <C-@>i :cs find i <C-R>=expand("<cfile>")<cr>$<cr>
-  nmap <C-@>d :cs find d <C-R>=expand("<cword>")<cr><cr>
-
-
-  map <silent> tc :call MakeCscope()<cr><cr><cr>
-
-  func! MakeCscope()
-    exec "!find . -name \"*.h\" -o -name \"*.c\" -o -name \"*.cpp\" -o -name \"*.cc\" > cscope.files"
-    exec "!cscope -Rbqk -i ./cscope.files"
-  endfunc
+if ExistPlugin("nerdcommenter")
+  " Create default mappings
+  let g:NERDCreateDefaultMappings = 1
+  " Add spaces after comment delimiters by default
+  let g:NERDSpaceDelims = 1
+  " Use compact syntax for prettified multi-line comments
+  let g:NERDCompactSexyComs = 1
+  " Align line-wise comment delimiters flush left instead of following code indentation
+  let g:NERDDefaultAlign = 'left'
+  " Set a language to use its alternate delimiters by default
+  let g:NERDAltDelims_java = 1
+  " Add your own custom formats or override the defaults
+  let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+  " Allow commenting and inverting empty lines (useful when commenting a region)
+  let g:NERDCommentEmptyLines = 1
+  " Enable trimming of trailing whitespace when uncommenting
+  let g:NERDTrimTrailingWhitespace = 1
+  " Enable NERDCommenterToggle to check all selected lines is commented or not
+  let g:NERDToggleCheckAllLines = 1
 endif
 
 nmap <Leader>f :Ack <C-R>=expand("<cword>")<cr><cr>
-
 "--------------------------------------------
 " tabbar
 "--------------------------------------------
@@ -282,8 +179,6 @@ let g:EasyMotion_leader_key = '<Leader>'
 "--------------------------------------------
 " vimgdb-motion
 "--------------------------------------------
-let g:vimgdb_debug_file = ""
-run bundle/vimgdb-for-vim7.3/vimgdb_runtime/macros/gdb_mappings.vim
 nmap <silent> tb :bel 20vsplit gdb-variables<cr>
 
 "--------------------------------------------
@@ -311,42 +206,7 @@ let g:NERDTreeWinSize=30
 let NERDTreeWinPos = "right"
 
 " Close vim when only Nerdtree
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-"--------------------------------------------
-" SrcExpl
-"--------------------------------------------
-if ExistPlugin("SrcExpl")
-  " The switch of the Source Explorer
-  nmap <silent> ts :SrcExplToggle<cr>
-  " Set the height of Source Explorer window
-  let g:SrcExpl_winHeight = 8
-  " Set 100 ms for refreshing the Source Explorer
-  let g:SrcExpl_refreshTime = 100
-  " Set "Enter" key to jump into the exact definition context
-  let g:SrcExpl_jumpKey = "<ENTER>"
-  " Set "Space" key for back from the definition context
-  let g:SrcExpl_gobackKey = "<SPACE>"
-  " In order to avoid conflicts, the Source Explorer should know what plugins
-  " except itself are using buffers. And you need add their buffer names into
-  " below listaccording to the command ":buffers!"
-  let g:SrcExpl_pluginList = [
-    \ "__Tagbar__",
-    \ "NERD_tree_1",
-    \ "[BufExplorer]",
-    \ "Source_Explorer"
-    \ ]
-
-  " Enable/Disable the local definition searching, and note that this is not
-  " guaranteed to work, the Source Explorer doesn't check the syntax for now.
-  " It only searches for a match with the keyword according to command 'gd'
-  let g:SrcExpl_searchLocalDef = 1
-  " Do not let the Source Explorer update the tags file when opening
-  let g:SrcExpl_isUpdateTags = 0
-  " Use 'Exuberant Ctags' with '--sort=foldcase -R .' or '-L cscope.files' to
-  " create/update the tags file
-  let g:SrcExpl_updateTagsCmd = "ctags --sort=foldcase -R ."
-endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "--------------------------------------------
 " ZenCoding
@@ -435,14 +295,6 @@ let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$'
 nmap tp :CtrlP<cr>
 
 "--------------------------------------------
-" Dart
-"--------------------------------------------
-if has('vim_starting')
-  set nocompatible
-  set runtimepath+=~/.vim/bundle/dart-vim-plugin
-endif
-
-"--------------------------------------------
 " syntastic
 "--------------------------------------------
 if ExistPlugin("syntastic")
@@ -463,22 +315,16 @@ endif
 " Fn config
 "--------------------------------------------
 " Keybindings for plugin toggle
-nmap <silent> <F9> <ESC>:Tlist<RETURN>
-nnoremap <F2> :set invpaste paste?<cr>
-set pastetoggle=<F2>
 nmap tg :TagbarToggle<cr>
 nmap th :BufExplorer<cr>
-nmap <F3> :NERDTreeToggle<cr>
-imap <F3> <ESC> :NERDTreeToggle<cr>
-nmap <F4> :IndentGuidesToggle<cr>
-nmap <F6> :GundoToggle<cr>
+nmap to :GundoToggle<cr>
 
 " Delete blank line
 nnoremap <C-F2> :g/^\s*$/d<cr>
 "nmap th \be
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<cr>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <cr><cr> && exec "redr!"
 
-nmap  <D-/> :
+nmap <D-/> :
 nnoremap <leader>a :Ack
 nnoremap <leader>v V`]
 nnoremap <Leader>r :source ~/.vimrc<cr>
@@ -498,7 +344,7 @@ vmap <C-c> "+y
 nnoremap <C-n> :cn<cr>
 
 " F5 for Complite
-nmap <C-F5> :call CompileRunGcc()<cr>
+nmap <leader>c :call CompileRunGcc()<cr>
 func! CompileRunGcc()
   exec "w"
   if &filetype == 'c'
@@ -523,38 +369,6 @@ func! CompileRunGcc()
     exec "!~/.vim/markdown.pl % > %.html &"
     exec "!firefox %.html &"
   endif
-endfunc
-
-map <F8> :call Rungdb()<cr>
-func! Rungdb()
-  exec "w"
-  exec "!g++ % -g -o %<"
-  exec "!gdb ./%<"
-endfunc
-
-" Code format
-map <C-F6> :call FormartSrc()<cr><cr>
-func FormartSrc()
-  exec "w"
-  if &filetype == 'c'
-    exec "!astyle --style=ansi -a --suffix=none %"
-  elseif &filetype == 'cpp' || &filetype == 'hpp'
-    exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
-  elseif &filetype == 'perl'
-    exec "!astyle --style=gnu --suffix=none %"
-  elseif &filetype == 'py'||&filetype == 'python'
-    exec "r !autopep8 -i --aggressive %"
-  elseif &filetype == 'java'
-    exec "!astyle --style=java --suffix=none %"
-  elseif &filetype == 'jsp'
-    exec "!astyle --style=gnu --suffix=none %"
-  elseif &filetype == 'xml'
-    exec "!astyle --style=gnu --suffix=none %"
-  else
-    exec "normal gg=G"
-    return
-  endif
-  exec "e! %"
 endfunc
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

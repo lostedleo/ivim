@@ -12,7 +12,6 @@ Bundle 'gmarik/vundle'
 " Code Completions
 "------------------
 " Bundle 'ajh17/VimCompletesMe'
-" Bundle 'Shougo/neocomplete.vim'
 Bundle 'ycm-core/YouCompleteMe'
 " Bundle 'Shougo/neocomplcache'
 " Bundle 'mattn/emmet-vim'
@@ -21,10 +20,10 @@ Bundle 'ervandew/supertab'
 
 "------ snipmate dependencies -------
 " snippets
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/vim-snippets'
+" Bundle 'MarcWeber/vim-addon-mw-utils'
+" Bundle 'tomtom/tlib_vim'
+" Bundle 'garbas/vim-snipmate'
+" Bundle 'honza/vim-snippets'
 
 "-----------------
 " Fast navigation
@@ -35,10 +34,10 @@ Bundle 'Lokaltog/vim-easymotion'
 "--------------
 " Fast editing
 "--------------
-" Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'sjl/gundo.vim'
-Bundle 'godlygeek/tabular'
+Bundle 'tpope/vim-surround'
+Bundle 'preservim/nerdcommenter'
+" Bundle 'sjl/gundo.vim'
+" Bundle 'godlygeek/tabular'
 " Bundle 'nathanaelkane/vim-indent-guides'
 
 "--------------
@@ -46,7 +45,7 @@ Bundle 'godlygeek/tabular'
 "--------------
 " Bundle 'fholgado/minibufexpl.vim'
 " Bundle 'zhaocai/GoldenView.Vim'
-Bundle 'scrooloose/nerdtree'
+Bundle 'preservim/nerdtree'
 "Bundle 'vim-scripts/TabBar'
 "Bundle 'humiaozuzu/TabBar'
 Bundle 'majutsushi/tagbar'
@@ -61,7 +60,7 @@ Bundle 'junegunn/fzf'
 Bundle 'Lokaltog/vim-powerline'
 "Bundle 'scrooloose/syntastic'
 Bundle 'bronson/vim-trailing-whitespace'
-Bundle 'lostedleo/taglist'
+" Bundle 'lostedleo/taglist'
 Bundle 'jlanzarotta/bufexplorer'
 Bundle 'lostedleo/avim'
 "Bundle 'lostedleo/vimgdb-for-vim7.3'
