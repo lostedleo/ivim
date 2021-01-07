@@ -153,6 +153,7 @@ if ExistPlugin("nerdcommenter")
   let g:NERDToggleCheckAllLines = 1
 endif
 
+let g:ackprg = 'ag --nogroup --nocolor --column'
 nmap <Leader>f :Ack <C-R>=expand("<cword>")<cr><cr>
 "--------------------------------------------
 " tabbar
