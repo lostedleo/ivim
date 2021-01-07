@@ -22,8 +22,8 @@ class FindByFileType:
         return dirs
 
 def usage():
-    print sys.argv[0] + ' -p path -t suffix'
-    print sys.argv[0] + ' -h get help info'
+    print(sys.argv[0] + ' -p path -t suffix')
+    print(sys.argv[0] + ' -h get help info')
 
 def main():
     opts, args = getopt.getopt(sys.argv[1:], "hp:t:", ["help", "path=", "type="])
@@ -46,7 +46,7 @@ def main():
     dirs = find_dirs.list_dirs(path, suffix)
     if len(dirs):
         for value in dirs:
-            print '\'-I\',\"' + value + '\",'
+            print('\'-I\',\"' + value + '\",')
 
 if __name__ == '__main__':
     main()
