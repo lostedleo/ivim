@@ -8,6 +8,8 @@ fi
 alias grep='grep --color=auto --exclude-dir=.bzr --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn -i'
 alias psgrep='ps -ef|grep'
 alias lsf='ls | sed "s:^:`pwd`/: "'
+alias ld='ls -F | grep '/$''
+alias lf='ls -l | grep '^-''
 
 #tmux alias
 alias tmuxat='tmux at -t'
