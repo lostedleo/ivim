@@ -1,37 +1,33 @@
 #!/bin/bash
 echo "ivim install vim plugins will task a new minutes, please waiting! ^_^"
 
-function set_shell()
-{
-  function check_alias()
-  {
+function set_shell() {
+  function check_alias() {
     grep "~/.vim/alias" $1
   }
 
-  command="source ~/.vim/alias"
-  command1="[[ -s /Users/zhuzhenwei/.autojump/etc/profile.d/autojump.sh ]] && source /Users/zhuzhenwei/.autojump/etc/profile.d/autojump.sh"
+  function set_command() {
+    cat >> $1 <<- EOF
+source ~/.vim/alias
+[[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
+autoload -U compinit && compinit -u
+EOF
+  }
+
   shell_name=~/.bashrc
   if [ -f ~/.zshrc ]; then
     shell_name=~/.zshrc
+  fi
 
-    check_alias $shell_name >/dev/null 2>&1
-    if [ $? -ne 0 ];then
-      echo $command| tee -a $shell_name
-      echo $command1| tee -a $shell_name
-    fi
-  else
-    check_alias $shell_name >/dev/null 2>&1
-    if [ $? -ne 0 ];then
-      sed -i "N;2a${command}" $shell_name
-      sed -i "N;2a${command1}" $shell_name
-    fi
+  check_alias $shell_name >/dev/null 2>&1
+  if [ $? -ne 0 ];then
+    set_command $shell_name
   fi
 }
 
 #main
 #start config vim and alias
 #
-
 if which apt-get >/dev/null 2>&1; then
   sudo apt-get install -y ctags ack cscope silversearcher-ag
 elif which yum >/dev/null 2>&1; then
@@ -62,12 +58,9 @@ fi
 #install efficient tools
 #install ohmyzsh
 sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-#install fzf
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-~/.fzf/install
 #install autojump
 git clone https://github.com/wting/autojump.git ~/.temp/autojump
-~/.temp/autojump/install.py
+cd ~/.temp/autojump && ./install.py && cd -
 
 #set shell config
 set_shell
@@ -82,12 +75,12 @@ if [ ! -d ~/.vim/bundle ];then
   git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
   #install vim plugin
-  tmp_file=ivim_temp
+  tmp_file=~/.vim/ivim_temp
   echo "ivim installing bundle plugins" > $tmp_file
   echo "install completed will auto exit" >> $tmp_file
   echo "please wating..." >> $tmp_file
   vim $tmp_file -c "BundleInstall" -c "q" -c "q"
   rm $tmp_file
-  ./bundle/fzf/install
+  ~/.vim/bundle/fzf/install
   echo "install completed!"
 fi
