@@ -70,6 +70,7 @@ Bundle 'lostedleo/avim'
 "-------------
 " Bundle 'humiaozuzu/fcitx-status'
 " Bundle 'nvie/vim-togglemouse'
+Bundle 'rizzatti/dash.vim'
 
 "----------------------------------------
 " Syntax/Indent for language enhancement

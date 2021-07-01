@@ -10,6 +10,7 @@ alias psgrep='ps -ef|grep'
 alias lsf='ls | sed "s:^:`pwd`/: "'
 alias ld='ls -F | grep '/$''
 alias lf='ls -l | grep '^-''
+alias findn='find . -name'
 
 #tmux alias
 alias tmuxat='tmux at -t'
@@ -30,6 +31,7 @@ alias gitpl='git pull'
 alias gitdf='git diff'
 alias gitps='git push'
 alias gitck='git checkout'
+alias gitbr='git branch'
 alias glog='git log --graph --pretty=format:'\''%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --abbrev-commit'
 
 #svn alias

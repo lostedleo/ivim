@@ -224,20 +224,23 @@ let g:user_emmet_expandabbr_key='<C-j>'
 "--------------------------------------------
 if ExistPlugin("YouCompleteMe")
   nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<cr>
-
-  let g:ycm_global_ycm_extra_conf = ''
-  let g:ycm_confirm_extra_conf = 0
-  let g:ycm_key_invoke_completion='<C-;>'
-  set completeopt=longest,menu
-  autocmd InsertLeave * if pumvisible() == 0|pclose|endif
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-  let g:ycm_enable_diagnostic_signs = 1
-  let g:ycm_enable_diagnostic_highlighting = 1
+
+  set runtimepath+=~/.vim/bundle/YouCompleteMe
+  let g:ycm_collect_identifiers_from_tags_files = 1
   let g:ycm_collect_identifiers_from_comments_and_strings = 1
+  let g:syntastic_ignore_files=[".*\.py$"]
+  let g:ycm_seed_identifiers_with_syntax = 1
+  let g:ycm_complete_in_comments = 1
+  let g:ycm_confirm_extra_conf = 0
+  let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+  let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
   let g:ycm_complete_in_comments = 1
   let g:ycm_complete_in_strings = 1
-  let g:ycm_min_num_of_chars_for_completion = 2
-  let g:ycm_key_list_select_completion = ['<TAB>','<Down>']
+  let g:ycm_collect_identifiers_from_comments_and_strings = 1
+  let g:ycm_global_ycm_extra_conf='~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+  let g:ycm_show_diagnostics_ui = 0
+  let g:ycm_min_num_of_chars_for_completion=1
 endif
 
 "--------------------------------------------
