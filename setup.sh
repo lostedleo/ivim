@@ -58,6 +58,10 @@ fi
 #install efficient tools
 #install ohmyzsh
 sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#install omz plugins
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
 #install autojump
 git clone https://github.com/wting/autojump.git ~/.temp/autojump
 cd ~/.temp/autojump && ./install.py && cd -
@@ -68,6 +72,7 @@ set_shell
 ln -sf ~/.vim/vimrc ~/.vimrc
 ln -sf ~/.vim/screenrc ~/.screenrc
 ln -sf ~/.vim/tmux.conf ~/.tmux.conf
+mkdir -p ~/.ssh
 ln -sf ~/.vim/config ~/.ssh/config
 
 #install all vim plugins
