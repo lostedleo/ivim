@@ -25,6 +25,14 @@ EOF
   fi
 }
 
+#install brew for Mac
+if [ "$(uname)" == "Darwin" ];then
+  # if brew not exist then install it
+  if ! $(command -v brew > /dev/null); then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
+fi
+
 #main
 #start config vim and alias
 #
@@ -72,7 +80,7 @@ set_shell
 ln -sf ~/.vim/vimrc ~/.vimrc
 ln -sf ~/.vim/screenrc ~/.screenrc
 ln -sf ~/.vim/tmux.conf ~/.tmux.conf
-mkdir -p ~/.ssh
+mkdir -p ~/.ssh/control
 ln -sf ~/.vim/config ~/.ssh/config
 
 #install all vim plugins
