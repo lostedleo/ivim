@@ -25,6 +25,7 @@ alias screenat='screen -rd'
 alias screennw='screen -S'
 
 #git alias
+alias gitclp='bash ~/.vim/tools/gitcl_proxy.sh'
 alias gitad='git add'
 alias gitst='git status .'
 alias gitcl='git clone'
@@ -42,3 +43,7 @@ alias svnco='svn commit'
 alias svnck='svn checkout'
 alias svncl='svn cleanup'
 alias svndf='svn diff'
+
+#export
+goproxy='export GOPROXY=https://goproxy.cn '
+ungoproxy='unset GOPROXY'
