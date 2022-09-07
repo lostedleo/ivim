@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e
-
 # Set Colors
 
 bold=$(tput bold)

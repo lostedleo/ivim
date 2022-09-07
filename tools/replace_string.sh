@@ -1,8 +1,5 @@
 #!/bin/bash
-set -e
-
 DIR="$(cd "$(dirname "$0")" && pwd)"
-echo $DIR
 source $DIR/common.sh
 
 if (($# != 3));then
@@ -18,10 +15,14 @@ fi
 
 src=$(echo $2|sed 's/\//\\\//g')
 dst=$(echo $3|sed 's/\//\\\//g')
-files=$(grep -rl $2 $1)
 
+files=$(grep -rl $2 $1)
+if (($? == 1));then
+  warn "not match $2 in any files"
+  exit -2
+fi
 
 info "replace string in ${files}"
 ${execution} -i "s/${src}/${dst}/g" ${files}
-sussces "replaced string in ${files}"
+success "replaced string in ${files}"
 
