@@ -41,7 +41,7 @@ if which apt-get >/dev/null 2>&1; then
 elif which yum >/dev/null 2>&1; then
   sudo yum install -y ctags ack cscope the_silver_searcher
 elif which brew >/dev/null 2>&1;then
-  brew install ctags ack cscope tmux the_silver_searcher
+  brew install ctags ack cscope tmux the_silver_searcher gsed
 fi
 
 if [ ! -f /usr/local/bin/ctags ];then
