@@ -22,7 +22,6 @@ if (($? == 1));then
   exit -2
 fi
 
-info "replace string in ${files}"
 ${execution} -i "s/${src}/${dst}/g" ${files}
 success "replaced string in ${files}"
 
