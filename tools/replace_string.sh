@@ -18,6 +18,10 @@ fi
 
 src=$(echo $2|sed 's/\//\\\//g')
 dst=$(echo $3|sed 's/\//\\\//g')
+files=$(grep -rl $2 $1)
 
-${execution} -i "s/${src}/${dst}/g" `grep -rl $2 $1`
+
+info "replace string in ${files}"
+${execution} -i "s/${src}/${dst}/g" ${files}
+sussces "replaced string in ${files}"
 
