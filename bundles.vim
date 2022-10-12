@@ -80,8 +80,8 @@ Bundle 'rizzatti/dash.vim'
 "Bundle 'digitaltoad/vim-jade'
 
 "------- web frontend ----------
-" Bundle 'othree/html5.vim'
-" Bundle 'tpope/vim-haml'
+Bundle 'othree/html5.vim'
+Bundle 'tpope/vim-haml'
 " Bundle 'pangloss/vim-javascript'
 " Bundle 'kchmck/vim-coffee-script'
 " Bundle 'nono/jquery.vim'
