@@ -1,5 +1,6 @@
 #!/bin/bash
-echo "ivim install vim plugins will task a new minutes, please waiting! ^_^"
+# sh -c "$(wget -O- https://raw.githubusercontent.com/lostedleo/ivim/master/setup.sh)"
+echo "ivim install vim plugins will task a few minutes, please waiting! ^_^"
 
 function set_shell() {
   function check_alias() {
@@ -69,6 +70,7 @@ sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools
 #install omz plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' ~/.zshrc
 
 #install autojump
 git clone https://github.com/wting/autojump.git ~/.temp/autojump
