@@ -79,11 +79,11 @@ cd ~/.temp/autojump && ./install.py && cd -
 #set shell config
 set_shell
 #set vim config
-ln -sf ~/.vim/vimrc ~/.vimrc
-ln -sf ~/.vim/screenrc ~/.screenrc
-ln -sf ~/.vim/tmux.conf ~/.tmux.conf
+ln -s ~/.vim/vimrc ~/.vimrc
+ln -s ~/.vim/screenrc ~/.screenrc
+ln -s ~/.vim/tmux.conf ~/.tmux.conf
 mkdir -p ~/.ssh/control
-ln -sf ~/.vim/config ~/.ssh/config
+ln -s ~/.vim/config ~/.ssh/config
 
 #install all vim plugins
 if [ ! -d ~/.vim/bundle ];then
