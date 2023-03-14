@@ -433,7 +433,7 @@ func SetTitle()
     call append(line(".")+8, "")
   endif
   if &filetype == 'c'
-    call append(line(".")+6, "#include<stdio.h>")
+    call append(line(".")+6, "#include <stdio.h>")
     call append(line(".")+7, "")
   endif
   if expand("%:e") == 'h'
