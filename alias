@@ -48,5 +48,5 @@ alias svncl='svn cleanup'
 alias svndf='svn diff'
 
 #export
-alias goproxy='export GOPROXY=https://goproxy.cn '
+alias goproxy='export GOPROXY=https://goproxy.cn'
 alias ungoproxy='unset GOPROXY'
