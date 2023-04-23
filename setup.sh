@@ -9,7 +9,7 @@ function set_shell() {
 
   function set_command() {
     cat >> $1 <<- EOF
-source ~/.vim/alias
+source ~/.vim/config/alias
 [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && source ~/.autojump/etc/profile.d/autojump.sh
 autoload -U compinit && compinit -u
 EOF
@@ -80,10 +80,10 @@ cd ~/.temp/autojump && ./install.py && cd -
 set_shell
 #set vim config
 ln -s ~/.vim/vimrc ~/.vimrc
-ln -s ~/.vim/screenrc ~/.screenrc
-ln -s ~/.vim/tmux.conf ~/.tmux.conf
+ln -s ~/.vim/config/screenrc ~/.screenrc
+ln -s ~/.vim/config/tmux.conf ~/.tmux.conf
 mkdir -p ~/.ssh/control
-ln -s ~/.vim/config ~/.ssh/config
+ln -s ~/.vim/config/ssh_config ~/.ssh/config
 
 #install all vim plugins
 if [ ! -d ~/.vim/bundle ];then
