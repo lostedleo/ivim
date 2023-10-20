@@ -38,15 +38,15 @@ fi
 #start config vim and alias
 #
 if which apt-get >/dev/null 2>&1; then
-  sudo apt-get install -y ctags ack cscope silversearcher-ag
+  apt-get install -y ctags ack cscope silversearcher-ag
 elif which yum >/dev/null 2>&1; then
-  sudo yum install -y ctags ack cscope the_silver_searcher
+  yum install -y ctags ack cscope the_silver_searcher
 elif which brew >/dev/null 2>&1;then
   brew install ctags ack cscope tmux the_silver_searcher gsed
 fi
 
 if [ ! -f /usr/local/bin/ctags ];then
-  sudo ln -s /usr/bin/ctags /usr/local/bin/ctags
+  ln -s /usr/bin/ctags /usr/local/bin/ctags
 fi
 
 #exist ivim do't backup and git clone
