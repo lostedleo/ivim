@@ -38,11 +38,11 @@ fi
 #start config vim and alias
 #
 if which apt-get >/dev/null 2>&1; then
-  apt-get install -y ctags ack cscope silversearcher-ag git
+  apt-get install -y universal-ctags ack cscope silversearcher-ag git zsh
 elif which yum >/dev/null 2>&1; then
-  yum install -y ctags ack cscope the_silver_searcher git
+  yum install -y ctags ack cscope the_silver_searcher git zsh
 elif which brew >/dev/null 2>&1;then
-  brew install ctags ack cscope tmux the_silver_searcher gsed git
+  brew install ctags ack cscope tmux the_silver_searcher gsed git zsh
 fi
 
 if [ ! -f /usr/local/bin/ctags ];then
