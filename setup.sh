@@ -169,12 +169,16 @@ EOF
 
 #install autojump
 install_autojump() {
-  if [ -d ~/.fzf ]; then
+  if [ -d ~/.autojump ]; then
     echo "${FMT_YELLOW}Found autojump, not to install!${FMT_RESET}"
     return
   fi
-  git clone https://github.com/wting/autojump.git ~/.temp/autojump
+
+  autojump_dir=~/.temp/autojump
+  git clone https://github.com/wting/autojump.git ${autojump_dir}
   cd ~/.temp/autojump && ./install.py && cd -
+
+  rm -rf ${autojump_dir}
   echo "${FMT_GREEN}Install autojump success!${FMT_RESET}"
 }
 
