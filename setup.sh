@@ -3,6 +3,7 @@
 set -e
 echo "ivim install vim plugins will task a few minutes, please waiting! ^_^"
 
+DIR="$(cd "$(dirname "$0")" && pwd)"
 if [ -t 1 ]; then
   is_tty() {
     true
@@ -147,8 +148,8 @@ install_omz() {
     return
   fi
 
-  mkdir -p ~/.temp
-  wget -O ~/.temp/omz_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+  mkdir -p ${DIR}/.temp
+  wget -O ${DIR}/.temp/omz_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 
   /usr/bin/expect << EOF
   spawn bash ~/.temp/omz_install.sh
@@ -158,7 +159,7 @@ install_omz() {
   expect eof
 EOF
 
-  rm ~/.temp/omz_install.sh
+  rm -rf ${DIR}/.temp
   #install omz plugins
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -250,6 +251,9 @@ main() {
   backup_vim
   # then install vim plugins
   install_vim_plugins
+  # set config and source shell
+  set_config
+  source_shell
 
   echo "${FMT_GREEN}Success install ivim!${FMT_RESET}"
 }
