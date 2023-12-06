@@ -152,7 +152,7 @@ install_omz() {
   wget -O ${DIR}/.temp/omz_install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 
   /usr/bin/expect << EOF
-  spawn bash ~/.temp/omz_install.sh
+  spawn bash ${DIR}/.temp/omz_install.sh
   expect {
     "Y/n" { send "y\n" }
   }
