@@ -183,13 +183,19 @@ install_autojump() {
   echo "${FMT_GREEN}Install autojump success!${FMT_RESET}"
 }
 
+check_link() {
+  if [ ! -L $2 ];then
+    ln -s $1 $2
+  fi
+}
+
 #set link config
 set_link() {
-  ln -s ~/.vim/vimrc ~/.vimrc
-  ln -s ~/.vim/config/screenrc ~/.screenrc
-  ln -s ~/.vim/config/tmux.conf ~/.tmux.conf
+  check_link ~/.vim/vimrc ~/.vimrc
+  check_link ~/.vim/config/screenrc ~/.screenrc
+  check_link ~/.vim/config/tmux.conf ~/.tmux.conf
   mkdir -p ~/.ssh/control
-  ln -s ~/.vim/config/ssh_config ~/.ssh/config
+  check_link ~/.vim/config/ssh_config ~/.ssh/config
 }
 
 install_fzf() {
@@ -211,16 +217,16 @@ install_vim_plugins() {
   if [ ! -d ~/.vim/bundle ];then
     git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
-  #install vim plugin
-  tmp_file=~/.vim/ivim_temp
-  echo "ivim installing bundle plugins" > $tmp_file
-  echo "install completed will auto exit" >> $tmp_file
-  echo "please wating..." >> $tmp_file
-  vim $tmp_file -c "BundleInstall" -c "q" -c "q"
-  rm $tmp_file
+    #install vim plugin
+    tmp_file=~/.vim/ivim_temp
+    echo "ivim installing bundle plugins" > $tmp_file
+    echo "install completed will auto exit" >> $tmp_file
+    echo "please wating..." >> $tmp_file
+    vim $tmp_file -c "BundleInstall" -c "q" -c "q"
+    rm $tmp_file
 
-  install_fzf
-  echo "${FMT_GREEN}install vim plugins and fzf!${FMT_RESET}"
+    install_fzf
+    echo "${FMT_GREEN}install vim plugins and fzf!${FMT_RESET}"
   fi
 }
 
@@ -253,9 +259,10 @@ main() {
   install_vim_plugins
   # set config and source shell
   set_config
-  source_shell
 
   echo "${FMT_GREEN}Success install ivim!${FMT_RESET}"
+  # last load zsh and source shell
+  zsh -l && source_shell
 }
 
 main
