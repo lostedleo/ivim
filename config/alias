@@ -6,6 +6,7 @@ if [ $? -ne 0 ];then
 fi
 
 alias sed_all='bash ~/.vim/tools/replace_string.sh'
+alias shck='bash ~/.vim/tools/check_shell.sh'
 alias grep='grep --color=auto --exclude-dir=.bzr --exclude-dir=.cvs --exclude-dir=.git --exclude-dir=.hg --exclude-dir=.svn -i'
 alias psgrep='ps -ef|grep'
 alias lsf='ls | sed "s:^:`pwd`/: "'
@@ -51,3 +52,7 @@ alias svndf='svn diff'
 #export
 alias goproxy='export GOPROXY=https://goproxy.cn'
 alias ungoproxy='unset GOPROXY'
+
+#conda env
+alias condaact='conda activate'
+alias condadea='conda deactivate'
