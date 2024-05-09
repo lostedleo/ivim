@@ -329,6 +329,7 @@ nmap to :GundoToggle<cr>
 nnoremap <C-F2> :g/^\s*$/d<cr>
 "nmap th \be
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<cr>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <cr><cr> && exec "redr!"
+au BufRead *.cu set filetype=c
 
 nmap <D-/> :
 nnoremap <leader>a :Ack

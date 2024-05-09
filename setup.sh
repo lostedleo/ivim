@@ -110,9 +110,9 @@ install_apps() {
 
 # install apps
   if which apt-get >/dev/null 2>&1; then
-    apt-get install -y universal-ctags ack cscope silversearcher-ag git zsh expect
+    apt-get install -y universal-ctags ack cscope tmux silversearcher-ag git zsh expect
   elif which yum >/dev/null 2>&1; then
-    yum install -y ctags ack cscope the_silver_searcher git zsh expect
+    yum install -y ctags ack cscope tmux the_silver_searcher git zsh expect
   elif which brew >/dev/null 2>&1;then
     brew install ctags ack cscope tmux the_silver_searcher gsed git zsh expect
   fi
