@@ -17,6 +17,7 @@ Bundle 'ycm-core/YouCompleteMe'
 " Bundle 'mattn/emmet-vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'ervandew/supertab'
+Bundle 'jiangmiao/auto-pairs'
 
 "------ snipmate dependencies -------
 " snippets
