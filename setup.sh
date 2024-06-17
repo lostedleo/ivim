@@ -75,8 +75,13 @@ setup_color() {
   FMT_RESET=$(printf '\033[0m')
 }
 
-check_alias() {
-  grep "~/.vim/config/alias" $1
+check_config_exit() {
+  grep "$1" $2 > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 set_command() {
@@ -93,8 +98,7 @@ set_shell() {
     shell_name=~/.zshrc
   fi
 
-  check_alias $shell_name >/dev/null 2>&1
-  if [ $? -ne 0 ];then
+  if ! $(check_config_exit "~/.vim/config/alias" $shell_name); then
     set_command $shell_name
   fi
 }
