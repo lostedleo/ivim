@@ -215,6 +215,7 @@ if ExistPlugin("tagbar")
   autocmd vimenter * call CallPlugin()
   func! CallPlugin()
     exec "Tagbar"
+    wincmd p
   endfunc
 endif
 
