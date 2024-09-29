@@ -138,7 +138,7 @@ if ExistPlugin("nerdcommenter")
   " Create default mappings
   let g:NERDCreateDefaultMappings = 1
   " Add spaces after comment delimiters by default
-  let g:NERDSpaceDelims = 1
+  " let g:NERDSpaceDelims = 1
   " Use compact syntax for prettified multi-line comments
   let g:NERDCompactSexyComs = 1
   " Align line-wise comment delimiters flush left instead of following code indentation
@@ -154,11 +154,17 @@ if ExistPlugin("nerdcommenter")
   let g:NERDTrimTrailingWhitespace = 1
   " Enable NERDCommenterToggle to check all selected lines is commented or not
   let g:NERDToggleCheckAllLines = 1
+endif
 
-  let g:NERDTreeShowBookmarks=1
+"--------------------------------------------
+" nerdtree
+"--------------------------------------------
+if ExistPlugin("nerdtree")
+  let g:NERDTreeShowBookmarks=0
   let g:NERDTreeWinSize=30
   let g:NERDTreeWinPos = "right"
   nnoremap te :NERDTreeToggle<cr>
+  autocmd BufEnter NERD_tree_* setlocal nocursorcolumn
 
   " Close vim when only Nerdtree
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
@@ -202,7 +208,7 @@ if ExistPlugin("tagbar")
   " let g:tagbar_right=1
   let g:tagbar_width=30
   let g:tagbar_autofocus = 1
-  let g:tagbar_sort = 1
+  let g:tagbar_sort = 0
   let g:tagbar_compact = 1
   nmap tg :TagbarToggle<cr>
 
