@@ -25,6 +25,7 @@ endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim color config
 color torte
+set signcolumn=no
 " color desert
 " color molokai
 " color xemacs
@@ -42,9 +43,11 @@ syntax enable
 syntax on
 
 " Highlight current line
+set cursorline cursorcolumn
 au WinLeave * set nocursorline nocursorcolumn
 au WinEnter * set cursorline cursorcolumn
-set cursorline cursorcolumn
+au BufEnter * set cursorline cursorcolumn
+au BufLeave * set nocursorline nocursorcolumn
 
 " Encoding dectection
 set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1,big5
@@ -57,8 +60,6 @@ set hlsearch
 "set highlight                  " conflict with highlight current line
 
 " Editor settings
-set cul                         " highlight cursor line
-set cuc
 set shortmess=atI               " not show Uganda children's tips
 set go=                         " not graphics button
 set nocompatible                " ignore VI consistency model
@@ -153,9 +154,18 @@ if ExistPlugin("nerdcommenter")
   let g:NERDTrimTrailingWhitespace = 1
   " Enable NERDCommenterToggle to check all selected lines is commented or not
   let g:NERDToggleCheckAllLines = 1
+
+  let g:NERDTreeShowBookmarks=1
+  let g:NERDTreeWinSize=30
+  let g:NERDTreeWinPos = "right"
+  nnoremap te :NERDTreeToggle<cr>
+
+  " Close vim when only Nerdtree
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 endif
 
 let g:ackprg = 'ag --nogroup --nocolor --column'
+nnoremap <leader>a :Ack
 nmap <Leader>f :Ack <C-R>=expand("<cword>")<cr><cr>
 "--------------------------------------------
 " tabbar
@@ -189,27 +199,18 @@ nmap <silent> tb :bel 20vsplit gdb-variables<cr>
 "--------------------------------------------
 if ExistPlugin("tagbar")
   let g:tagbar_left=1
-  "let g:tagbar_right=1
+  " let g:tagbar_right=1
   let g:tagbar_width=30
-  "let g:tagbar_autofocus = 1
-  let g:tagbar_sort = 0
+  let g:tagbar_autofocus = 1
+  let g:tagbar_sort = 1
   let g:tagbar_compact = 1
+  nmap tg :TagbarToggle<cr>
 
   autocmd vimenter * call CallPlugin()
   func! CallPlugin()
     exec "Tagbar"
   endfunc
 endif
-
-"--------------------------------------------
-" Nerd Tree
-"--------------------------------------------
-let NERDTreeShowBookmarks=1
-let g:NERDTreeWinSize=30
-let NERDTreeWinPos = "right"
-
-" Close vim when only Nerdtree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "--------------------------------------------
 " ZenCoding
@@ -321,21 +322,16 @@ endif
 " Fn config
 "--------------------------------------------
 " Keybindings for plugin toggle
-nmap tg :TagbarToggle<cr>
 nmap th :BufExplorer<cr>
-nmap to :GundoToggle<cr>
 
 " Delete blank line
 nnoremap <C-F2> :g/^\s*$/d<cr>
-"nmap th \be
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<cr>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <cr><cr> && exec "redr!"
 au BufRead *.cu set filetype=c
 
 nmap <D-/> :
-nnoremap <leader>a :Ack
 nnoremap <leader>v V`]
 nnoremap <Leader>r :source ~/.vimrc<cr>
-nnoremap te :NERDTreeToggle<cr>
 
 map! <C-Z> <Esc>zzi
 map! <C-O> <C-Y>,
@@ -366,7 +362,7 @@ func! CompileRunGcc()
   elseif &filetype == 'sh'
     :!time bash %
   elseif &filetype == 'python'
-    exec "!time python2.7 %"
+    exec "!time python %"
   elseif &filetype == 'html'
     exec "!firefox % &"
   elseif &filetype == 'go'
@@ -449,44 +445,3 @@ func SetTitle()
   endif
 endfunc
 autocmd BufNewFile * normal G
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" C++ Coding
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-autocmd BufEnter BUILD set filetype=python
-augroup filetype
-  au! BufRead,BufNewFile *.proto setfiletype proto
-augroup end
-
-function! FindProjectRootDir()
-  let rootfile = findfile("BLADE_ROOT", ".;")
-  " in project root dir
-  if rootfile == "BLADE_ROOT"
-    return "."
-  endif
-  return substitute(rootfile, "/BLADE_ROOT$", "", "")
-endfunction
-function! AutoSetPath()
-  if exists("b:did_auto_set_path")
-    return
-  endif
-  let b:did_auto_set_path = 1
-
-  let l:project_root = FindProjectRootDir()
-  if l:project_root != ""
-    if l:project_root == "."
-      exec "set path+=" . getcwd() . "/.build/pb/c++"
-    else
-      exec "set path+=" . project_root
-      exec "set path+=" . project_root . "/.build/pb/c++"
-    endif
-
-    " use current path makefile first
-    if filereadable("./Makefile") || filereadable("./makefile")
-      return
-    endif
-
-    exec "set makeprg=make\\ -C\\ " . project_root
-  endif
-endfunction
-call AutoSetPath()

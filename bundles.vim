@@ -1,17 +1,15 @@
-set nocompatible               " be iMproved
-filetype off                   " required!
+set nocompatible
+filetype off
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required!
 Bundle 'gmarik/vundle'
 
 "------------------
 " Code Completions
 "------------------
-" Bundle 'ajh17/VimCompletesMe'
 Bundle 'ycm-core/YouCompleteMe'
 " Bundle 'Shougo/neocomplcache'
 " Bundle 'mattn/emmet-vim'
@@ -117,4 +115,4 @@ Bundle 'Lokaltog/vim-distinguished'
 Bundle 'chriskempson/vim-tomorrow-theme'
 Bundle 'fisadev/fisa-vim-colorscheme'
 
-filetype plugin indent on     " required!
+filetype plugin indent on
