@@ -20,19 +20,9 @@ if isdirectory(g:bundle_path)
   source ~/.vim/bundles.vim
 endif
 
-function! ExistsTagbar()
+function! ExistsFiletype(name)
   for w in range(1, winnr('$'))
-    if getbufvar(winbufnr(w), '&filetype') == 'tagbar'
-      return 1
-    else
-      return 0
-    endif
-  endfor
-endfunction
-
-function! ExistsNERDTree()
-  for w in range(1, winnr('$'))
-    if getbufvar(winbufnr(w), '&filetype') == 'nerdtree'
+    if getbufvar(winbufnr(w), '&filetype') == a:name
       return 1
     endif
   endfor
@@ -41,8 +31,7 @@ endfunction
 
 function! NoExcitingBuffersLeft()
   if winnr("$") == 2
-    if ExistsTagbar() && ExistsNERDTree()
-      echo "Should exit"
+    if ExistsFiletype('tagbar') && ExistsFiletype('nerdtree')
       exec "qa"
     endif
   endif
