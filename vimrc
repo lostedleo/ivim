@@ -24,9 +24,10 @@ function! ExistsTagbar()
   for w in range(1, winnr('$'))
     if getbufvar(winbufnr(w), '&filetype') == 'tagbar'
       return 1
+    else
+      return 0
     endif
   endfor
-  return 0
 endfunction
 
 function! ExistsNERDTree()
@@ -54,7 +55,6 @@ autocmd BufLeave * call NoExcitingBuffersLeft()
 " Vim Base Config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim color config
-" color torte
 set signcolumn=no
 " color desert
 " color molokai
@@ -64,9 +64,13 @@ set background=dark
 " set background=light
 " colorscheme solarized
 " let g:solarized_termcolors=256
-colorscheme gruvbox
 " color solarized
 " highlight clear
+if ExistPlugin("gruvbox")
+  colorscheme gruvbox
+else
+  colorscheme torte
+endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Enable filetype dectection and ft specific plugin/indent
