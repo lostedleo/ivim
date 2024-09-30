@@ -51,6 +51,14 @@ endfunction
 
 autocmd BufLeave * call NoExcitingBuffersLeft()
 
+function! SetCursor()
+  if &cursorline
+    set nocursorline nocursorcolumn
+  else
+    set cursorline cursorcolumn
+  endif
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim Base Config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -82,12 +90,9 @@ syntax on
 
 " Highlight current line
 set cursorline cursorcolumn
-autocmd WinLeave * set nocursorline nocursorcolumn
-autocmd WinEnter * set cursorline cursorcolumn
-autocmd BufEnter * set cursorline cursorcolumn
-autocmd BufLeave * set nocursorline nocursorcolumn
+nmap tu :call SetCursor()<cr>
 highlight cursorline ctermbg=53 guibg=#2E2E2E
-highlight cursorcolumn ctermbg=54 guibg=#3E3E3E
+highlight cursorcolumn ctermbg=53 guibg=#3E3E3E
 
 " Encoding dectection
 set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1,big5
@@ -205,11 +210,11 @@ if ExistPlugin("nerdtree")
   let g:NERDTreeWinSize=30
   let g:NERDTreeWinPos = "right"
   nmap te :NERDTreeToggle<cr>
+
+  " Close vim when only Nerdtree
   autocmd FileType nerdtree setlocal nocursorline nocursorcolumn
   autocmd BufEnter NERD_tree_* setlocal nocursorcolumn nocursorline
   autocmd WinEnter NERD_tree_* setlocal nocursorline nocursorcolumn
-
-  " Close vim when only Nerdtree
   autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 endif
 
