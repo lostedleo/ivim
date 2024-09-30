@@ -20,19 +20,53 @@ if isdirectory(g:bundle_path)
   source ~/.vim/bundles.vim
 endif
 
+function! ExistsTagbar()
+  for w in range(1, winnr('$'))
+    if getbufvar(winbufnr(w), '&filetype') == 'tagbar'
+      return 1
+    endif
+  endfor
+  return 0
+endfunction
+
+function! ExistsNERDTree()
+  for w in range(1, winnr('$'))
+    if getbufvar(winbufnr(w), '&filetype') == 'nerdtree'
+      return 1
+    endif
+  endfor
+  return 0
+endfunction
+
+function! NoExcitingBuffersLeft()
+  if winnr("$") == 2
+    if ExistsTagbar() && ExistsNERDTree()
+      echo "Should exit"
+      exec "qa"
+    endif
+  endif
+
+endfunction
+
+autocmd BufLeave * call NoExcitingBuffersLeft()
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim Base Config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vim color config
-color torte
+" color torte
 set signcolumn=no
 " color desert
 " color molokai
 " color xemacs
-" color solarized
+syntax enable
+set background=dark
 " set background=light
-" highlight clear
+" colorscheme solarized
 " let g:solarized_termcolors=256
+colorscheme gruvbox
+" color solarized
+" highlight clear
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Enable filetype dectection and ft specific plugin/indent
@@ -44,10 +78,12 @@ syntax on
 
 " Highlight current line
 set cursorline cursorcolumn
-au WinLeave * set nocursorline nocursorcolumn
-au WinEnter * set cursorline cursorcolumn
-au BufEnter * set cursorline cursorcolumn
-au BufLeave * set nocursorline nocursorcolumn
+autocmd WinLeave * set nocursorline nocursorcolumn
+autocmd WinEnter * set cursorline cursorcolumn
+autocmd BufEnter * set cursorline cursorcolumn
+autocmd BufLeave * set nocursorline nocursorcolumn
+highlight cursorline ctermbg=53 guibg=#2E2E2E
+highlight cursorcolumn ctermbg=54 guibg=#3E3E3E
 
 " Encoding dectection
 set fileencodings=utf-8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1,big5
@@ -138,7 +174,7 @@ if ExistPlugin("nerdcommenter")
   " Create default mappings
   let g:NERDCreateDefaultMappings = 1
   " Add spaces after comment delimiters by default
-  " let g:NERDSpaceDelims = 1
+  let g:NERDSpaceDelims = 1
   " Use compact syntax for prettified multi-line comments
   let g:NERDCompactSexyComs = 1
   " Align line-wise comment delimiters flush left instead of following code indentation
@@ -160,17 +196,20 @@ endif
 " nerdtree
 "--------------------------------------------
 if ExistPlugin("nerdtree")
+  " let g:NERDTreeQuitOnOpen=1
   let g:NERDTreeShowBookmarks=0
   let g:NERDTreeWinSize=30
   let g:NERDTreeWinPos = "right"
-  nnoremap te :NERDTreeToggle<cr>
-  autocmd BufEnter NERD_tree_* setlocal nocursorcolumn
+  nmap te :NERDTreeToggle<cr>
+  autocmd FileType nerdtree setlocal nocursorline nocursorcolumn
+  autocmd BufEnter NERD_tree_* setlocal nocursorcolumn nocursorline
+  autocmd WinEnter NERD_tree_* setlocal nocursorline nocursorcolumn
 
   " Close vim when only Nerdtree
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+  autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 endif
 
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag -a --nogroup --nocolor --column'
 nnoremap <leader>a :Ack
 nmap <Leader>f :Ack <C-R>=expand("<cword>")<cr><cr>
 "--------------------------------------------
@@ -211,6 +250,10 @@ if ExistPlugin("tagbar")
   let g:tagbar_sort = 0
   let g:tagbar_compact = 1
   nmap tg :TagbarToggle<cr>
+
+  autocmd FileType tagbar setlocal nocursorline nocursorcolumn
+  autocmd BufEnter __Tagbar* setlocal nocursorcolumn nocursorline
+  autocmd WinEnter __Tagbar* setlocal nocursorline nocursorcolumn
 
   autocmd vimenter * call CallPlugin()
   func! CallPlugin()
@@ -333,8 +376,7 @@ nmap th :BufExplorer<cr>
 
 " Delete blank line
 nnoremap <C-F2> :g/^\s*$/d<cr>
-:autocmd BufRead,BufNewFile *.dot map <F5> :w<cr>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <cr><cr> && exec "redr!"
-au BufRead *.cu set filetype=c
+autocmd BufRead *.cu set filetype=c
 
 nmap <D-/> :
 nnoremap <leader>v V`]
