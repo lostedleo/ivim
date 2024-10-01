@@ -74,9 +74,9 @@ Bundle 'rizzatti/dash.vim'
 "----------------------------------------
 "------- web backend ---------
 " Bundle '2072/PHP-Indenting-for-VIm'
-"Bundle 'tpope/vim-rails'
+" Bundle 'tpope/vim-rails'
 " Bundle 'lepture/vim-jinja'
-"Bundle 'digitaltoad/vim-jade'
+" Bundle 'digitaltoad/vim-jade'
 
 "------- web frontend ----------
 Bundle 'othree/html5.vim'

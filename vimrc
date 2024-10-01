@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vundle Plugins
+" Vundle Plugins And Functions
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Define functions check plugin exist or not in vundle
 let g:bundle_path = $HOME . "/.vim/bundle"
@@ -20,6 +20,14 @@ if isdirectory(g:bundle_path)
   source ~/.vim/bundles.vim
 endif
 
+function! Filetype()
+  for buf in range(1, bufnr('$'))
+    let name = bufname(buf)
+    let typename = getbufvar(bufnr(buf), '&filetype')
+    echo "exist bufname: " . name . " filetype: " . typename . " buf: " . buf
+  endfor
+endfunction
+
 function! ExistsFiletype(name)
   for w in range(1, winnr('$'))
     if getbufvar(winbufnr(w), '&filetype') == a:name
@@ -29,15 +37,23 @@ function! ExistsFiletype(name)
   return 0
 endfunction
 
-function! NoExcitingBuffersLeft()
+function! OnlyTagbarAndNertree()
   if winnr("$") == 2
     if ExistsFiletype('tagbar') && ExistsFiletype('nerdtree')
       exec "qa"
     endif
   endif
-
 endfunction
 
+function! NoExcitingBuffersLeft()
+  if winnr("$") == 3
+    if ExistsFiletype('tagbar') && ExistsFiletype('nerdtree') && ExistsFiletype('qf')
+      exec "qa"
+    endif
+  endif
+endfunction
+
+autocmd BufLeave * call OnlyTagbarAndNertree()
 autocmd BufLeave * call NoExcitingBuffersLeft()
 
 function! SetCursor()
@@ -392,6 +408,8 @@ vmap <C-c> "+y
 
 " For quickfix next error
 nnoremap <C-n> :cn<cr>
+autocmd BufEnter * if &filetype == 'qf' | setlocal nocursorcolumn nocursorline | endif
+autocmd WinEnter * if &filetype == 'qf' | setlocal nocursorcolumn nocursorline | endif
 
 " F5 for Complite
 nmap <leader>c :call CompileRunGcc()<cr>
